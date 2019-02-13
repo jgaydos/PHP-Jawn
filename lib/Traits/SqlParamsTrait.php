@@ -14,13 +14,13 @@ trait SqlParamsTrait
     private function params(string $query, array $params): string
 	{
 		if (array_keys($params) !== range(0, count($params) - 1)) {
-            // associative array
+            // associative array for named replacement
             foreach ($params as $name => $param) {
                 $name = ':'.ltrim($name, ':');
                 $query = str_replace($name, $param, $query);
             }
         } else {
-            // sequencial array
+            // sequencial array for ? replacement
             foreach ($params as $param) {
                 if ($pos = strpos($query, '?') !== false) {
                     $query = substr_replace($query, $param, $pos, strlen('?'));
