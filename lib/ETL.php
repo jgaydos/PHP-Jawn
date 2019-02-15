@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Rick but with the master array replaced with a SQLite database.
  */

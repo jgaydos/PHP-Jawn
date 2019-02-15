@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Remote class
  */

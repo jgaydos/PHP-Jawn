@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Dates are stupid. Lets make them stupid easy.
  */

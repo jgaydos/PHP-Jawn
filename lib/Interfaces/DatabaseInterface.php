@@ -1,6 +1,6 @@
 <?php
 
-namespace Interfaces;
+namespace Jawn\Interfaces;
 
 /**
  * Assure that database classes are posess the same methods.

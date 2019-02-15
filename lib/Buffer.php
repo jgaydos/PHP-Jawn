@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Output buffering
  */

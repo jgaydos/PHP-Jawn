@@ -1,5 +1,6 @@
 <?php
-namespace Remote;
+
+namespace Jawn\Remote;
 
 /**
  * Run commands on remote server over SSH

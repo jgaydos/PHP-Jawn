@@ -1,6 +1,6 @@
 <?php
 
-namespace Database;
+namespace Jawn\Database;
 
 /**
  * Sqlite: An in-process library that implements a self-contained, serverless,

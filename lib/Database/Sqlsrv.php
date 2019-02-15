@@ -1,6 +1,6 @@
 <?php
 
-namespace Database;
+namespace Jawn\Database;
 
 use Console;
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Generates cryptographically secure-ish pseudo-random data
  */

@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Useful (or not) console tools
  */

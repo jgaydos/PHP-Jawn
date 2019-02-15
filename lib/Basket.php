@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Basket class (static)
  *

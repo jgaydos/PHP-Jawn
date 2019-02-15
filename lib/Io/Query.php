@@ -1,6 +1,6 @@
 <?php
 
-namespace Io;
+namespace Jawn\Io;
 
 class Query
 {

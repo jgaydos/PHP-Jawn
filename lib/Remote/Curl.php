@@ -1,6 +1,6 @@
 <?php
 
-namespace Remote;
+namespace Jawn\Remote;
 
 class Curl
 {

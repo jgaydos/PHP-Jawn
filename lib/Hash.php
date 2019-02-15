@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
 * Hash class
 */

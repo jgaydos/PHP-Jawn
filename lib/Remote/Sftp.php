@@ -1,6 +1,6 @@
 <?php
 
-namespace Remote;
+namespace Jawn\Remote;
 
 /**
  * Get files from and Put files on remote server

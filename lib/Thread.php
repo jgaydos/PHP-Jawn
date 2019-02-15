@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Simple way to thread NTS PHP
  */

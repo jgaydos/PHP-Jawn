@@ -1,6 +1,7 @@
 <?php
 
-namespace Remote;
+namespace Jawn\Remote;
+
 /** NOTE THIS HAS NOT BEEN TESTED AND MAY NOT WORK */
 class Ftp
 {

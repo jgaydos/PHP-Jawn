@@ -1,6 +1,6 @@
 <?php
 
-namespace Io;
+namespace Jawn\Io;
 
 /**
  * you put it in and take it out

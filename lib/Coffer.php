@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawn;
+
 /**
  * Basically this stores data in memory via a SQLite database.
  */
