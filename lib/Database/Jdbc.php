@@ -2,6 +2,9 @@
 
 namespace Jawn\Database;
 
+/**
+ * Class for using PHP JDBC Java bridge
+ */
 class Jdbc
 {
     use \Traits\SqlParamsTrait;
