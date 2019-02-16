@@ -41,11 +41,11 @@ class Coffer
     public static function append(array $data, string $handle = 'morty'): void
     {
         if (self::$_data === null) {
-            exit('No memories found!');
+            throw new \CofferEmptyException('Must first use set data.');
         }
 
         if (!self::tableExist($handle)) {
-            exit('Memory not found!');
+            throw new \CofferHandleException("{$handle} not found.");
         }
 
         self::import($handle, $data);
@@ -65,8 +65,8 @@ class Coffer
     ): array {
         $query = self::params($query, $params);
         $results = self::$_data->query($query);
-        if ($results === false) {
-            exit();
+        if (!$results) {
+            throw new \CofferQueryException('Query failed.');
         }
 
         $oftheKing = [];
@@ -89,13 +89,17 @@ class Coffer
     public static function get(string $handle = 'morty'): array
     {
         if (self::$_data === null) {
-            exit();
+            throw new \CofferEmptyException('Must first use set data.');
+        }
+
+        if (!self::tableExist($handle)) {
+            throw new \CofferHandleException("{$handle} not found.");
         }
 
         $query = "SELECT * FROM [{$handle}]";
         $results = self::$_data->query($query);
-        if ($results === false) {
-            exit();
+        if (!$results) {
+            throw new \CofferQueryException('Query failed.');
         }
 
         $oftheKing = [];
@@ -115,7 +119,6 @@ class Coffer
         $sql = "DROP TABLE IF EXISTS [{$handle}]";
 
         $results = self::$_data->query($sql);
-
     }
 
     /**
