@@ -3,7 +3,7 @@
 namespace Jawn;
 
 /**
- * Output buffering
+ * Output buffering as I can never remember ob_yadda_yadda
  */
 class Buffer
 {
@@ -11,6 +11,7 @@ class Buffer
 
     /**
      * Turn on output buffering
+     * @return  void
      */
     public static function on(): void
     {
@@ -20,6 +21,7 @@ class Buffer
 
     /**
      * Get current buffer contents and delete current output buffer
+     * @return  string  Buffered output
      */
     public static function get(): string
     {
@@ -31,6 +33,7 @@ class Buffer
 
     /**
      * Clean (erase) the output buffer and turn off output buffering
+     * @return  string  Buffered output
      */
     public static function off(): string
     {
