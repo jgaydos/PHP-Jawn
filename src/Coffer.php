@@ -4,8 +4,8 @@ namespace Jawn;
 
 /**
  * Basically this stores data in memory via a SQLite database.
- * I could have used the Sqlite class but I wanted this to be
- * self containe.
+ * I could have used the Sqlite class in this project but I
+ * wanted this to be self containe.
  */
 class Coffer
 {
