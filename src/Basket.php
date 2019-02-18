@@ -49,6 +49,8 @@ class Basket
 
     /**
      * Return project dir for current host
+     * @param   string  $name   Project name
+     * @return  string
      */
     public static function projectDir(string $name = ''): string
     {
@@ -63,6 +65,8 @@ class Basket
 
     /**
      * Load json config file
+     * @param   string  $location   Location of config
+     * @return  void
      */
     public static function load(string $location): void
     {
