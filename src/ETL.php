@@ -7,6 +7,8 @@ namespace Jawn;
  */
 class ETL
 {
+    use Traits\OverloadTrait;
+
     /**
      * ETL constructor.
      *
@@ -28,8 +30,22 @@ class ETL
      * @param array $options
      * @return ETL
      */
-    public function extract(string $type, $source, string $handle = 'morty', array $options = []): ETL
+    public function extract(/*string $type, $source, array $options = [], string $handle = 'morty'*/): ETL
     {
+        $args = func_get_args();
+
+        if ($this->overload($args, ['string', 'string|array', 'string'])) {
+            $type = $args[0];
+            $source = $args[1];
+            $options = [];
+            $handle = $args[2] ?? 'morty';
+        } elseif ($this->overload($args, ['string', 'string|array', 'array', 'string'])) {
+            $type = $args[0];
+            $source = $args[1];
+            $options = $args[2] ?? [];
+            $handle = $args[3] ?? 'morty';
+        }
+
         Console::info("E -> $type as $handle", '');
 
         if ($type === 'array') {
@@ -58,8 +74,20 @@ class ETL
      * @param string $handle
      * @return ETL
      */
-    public function transform(string $query, array $params = [], string $handle = 'morty'): ETL
+    public function transform(/*string $query, array $params = [], string $handle = 'morty'*/): ETL
     {
+        $args = func_get_args();
+
+        if ($this->overload($args, ['string', 'string'])) {
+            $query = $args[0];
+            $params = [];
+            $handle = $args[1] ?? 'morty';
+        } elseif ($this->overload($args, ['string', 'array', 'string'])) {
+            $query = $args[0];
+            $params = $args[1] ?? [];
+            $handle = $args[2] ?? 'morty';
+        }
+
         Console::info("T -> ".($handle !== '' ? "$handle = " : '')."(".substr(str_replace(["\r", "\n", ' '], ' ', $query), 0, 30)."...)", '');
         Coffer::query($query, $params, $handle);
         Console::success('...Wubbalubbadubdub!');
@@ -76,8 +104,22 @@ class ETL
      * @param string $handle
      * @return ETL
      */
-    public function load(string $type, $destination, string $handle = 'morty', array $options = [])
+    public function load(/*string $type, $destination, array $options = [], string $handle = 'morty'*/)
     {
+        $args = func_get_args();
+
+        if ($this->overload($args, ['string', 'string|array', 'string'])) {
+            $type = $args[0];
+            $destination = $args[1];
+            $options = [];
+            $handle = $args[2] ?? 'morty';
+        } elseif ($this->overload($args, ['string', 'string|array', 'array', 'string'])) {
+            $type = $args[0];
+            $destination = $args[1];
+            $options = $args[2] ?? [];
+            $handle = $args[3] ?? 'morty';
+        }
+
         Console::info("L -> $type $destination".($handle !== '' ? " with $handle" : ''), '');
 
         // array
