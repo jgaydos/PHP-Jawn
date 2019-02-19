@@ -80,19 +80,4 @@ class Random
         }
         return $ofTheKing;
     }
-
-    /**
-     * Set aliases for existing methods
-     * @param   $name   int
-     */
-    public static function __callStatic(string $name, array $argv): mixed
-    {
-        switch ($name) {
-            case 'double':
-                return self::float($argv[1], $argv[2]);
-            case 'integer':
-                return self::int($argv[1], $argv[2]);
-        }
-        die();
-    }
 }
