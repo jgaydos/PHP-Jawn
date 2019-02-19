@@ -9,7 +9,7 @@ namespace Jawn;
  */
 class Coffer
 {
-    use Jawn\Traits\SqlParamsTrait;
+    use Traits\SqlParamsTrait;
 
     /** SQLite3 object */
     private static $_data = null;
@@ -23,7 +23,7 @@ class Coffer
     public static function set(array $data, string $handle = 'morty'): void
     {
         if (self::$_data === null) {
-            self::$_data = new SQLite3(':memory:');
+            self::$_data = new \SQLite3(':memory:');
         }
 
         self::dropTable($handle);
