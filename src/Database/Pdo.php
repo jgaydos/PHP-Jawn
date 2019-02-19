@@ -28,7 +28,6 @@ class Pdo implements Jawn\Interfaces\DatabaseInterface
             $connStr = "jdbc:sqlserver://$host:$port;databasename=$database;";
         } elseif ($connection->type === 'oracle') {
             $connStr = "jdbc:oracle:thin:$username/$password@$host:$port:$database";
-            die('I have never tested this.');
         } else {
             throw new \DatabaseConnectionException('PDO driver not configured!');
         }
