@@ -22,9 +22,9 @@ class File
      * List dir contents
      * @param   string  $target
      * @param   array   $exclude
-     * @return  array
+     * @return  array|bool
      */
-    public function ls(string $target, array $exclude = ['..', '.']): mixed
+    public function ls(string $target, array $exclude = ['..', '.'])
     {
         if (self::exists($target)) {
             $ofTheKing = array_values(array_diff(scandir($target), $exclude));
@@ -41,7 +41,7 @@ class File
      * @param   string  $target
      * @return  array
      */
-    public function lf(string $target): mixed
+    public function lf(string $target)
     {
         $ls = self::ls($target);
         if ($ls === false) {
@@ -49,7 +49,6 @@ class File
         }
         $ofTheKing = [];
         foreach ($ls as $name) {
-            //$name = rtrim($target, '/\\').'/'.$name;
             if (is_file($name)) {
                 $ofTheKing[] = $name;
             }
@@ -62,7 +61,7 @@ class File
      * @param   string  $target
      * @return  array
      */
-    public function ld(string $target): mixed
+    public function ld(string $target)
     {
         $ls = self::ls($target);
         if ($ls === false) {
@@ -70,7 +69,6 @@ class File
         }
         $ofTheKing = [];
         foreach ($ls as $name) {
-            //$name = rtrim($target, '/\\').'/'.$name;
             if (is_dir($name)) {
                 $ofTheKing[] = $name;
             }
@@ -84,7 +82,7 @@ class File
      * @param   bool    $dirFirst
      * @return  array
      */
-    public function tree(string $target, bool $dirFirst = false): mixed
+    public function tree(string $target, bool $dirFirst = false)
     {
         $ofTheKing = [];
         if (
@@ -113,7 +111,7 @@ class File
      * @param   string  $target
      * @return  bool
      */
-    public function rm(string $target): mixed
+    public function rm(string $target)
     {
         if (is_array($target)) {
             foreach ($target as $trail) {
@@ -144,7 +142,7 @@ class File
         string $target,
         int $mode = 0777,
         bool $recursive = false
-    ): mixed {
+    ) {
         if (!mkdir($target, $mode, $recursive)) {
             return false;
         }
@@ -229,7 +227,7 @@ class File
     /**
      * Reads an entire file into a string
      */
-    public function contents(string $target): mixed
+    public function contents(string $target)
     {
         if (!file_exists($target)) {
             return false;
@@ -240,7 +238,7 @@ class File
     /**
      * Reads an entire file into an array
      */
-    public function read(string $target): mixed
+    public function read(string $target)
     {
         if (!file_exists($target)) {
             return false;
