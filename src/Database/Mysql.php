@@ -2,9 +2,9 @@
 
 namespace Jawn\Database;
 
-class Mysql
+class Mysql implements \Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlParamsTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 
@@ -23,10 +23,10 @@ class Mysql
         $password = $connection->password ?? '';
 
         //Establish the connection
-        $this->_conn = new \mysqli($host, $username, $password);
+        $this->_conn = @new \mysqli($host, $username, $password);
 
-        if( $this->_conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+        if ($this->_conn->connect_error) {
+            throw new \DatabaseConnectionException($this->_conn->connect_error);
         }
     }
 
@@ -42,11 +42,13 @@ class Mysql
     {
         $sql = $this->params($sql, $params);
         $result = $this->_conn->query($sql);
-        if(!$result) {
-            die( $this->_conn->connect_error);
+
+        if (!$result) {
+            throw new \DatabaseQueryException($this->_conn->connect_error);
         }
+
         $ofTheKing = [];
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $ofTheKing[] = $row;
         }
         return $ofTheKing;
@@ -63,6 +65,9 @@ class Mysql
     public function execute(string $sql, array $params = []): void
     {
         $sql = $this->params($sql, $params);
-        $this->_conn->real_query($sql);
+
+        if (!$this->_conn->real_query($sql)) {
+            throw new \DatabaseQueryException($this->_conn->connect_error);
+        }
     }
 }

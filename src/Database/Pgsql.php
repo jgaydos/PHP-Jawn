@@ -2,9 +2,9 @@
 
 namespace Jawn\Database;
 
-class Pgsql
+class Pgsql implements Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlParamsTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 
@@ -25,6 +25,9 @@ class Pgsql
         //Establish the connection
         $dsn = "host=$host port=$port dbname=$database user=$username password=$password";
         $this->_conn = pg_connect($dsn);
+        if (!$this->_conn) {
+            throw new \DatabaseConnectionException('Connection failed');
+        }
     }
 
     /**
@@ -39,11 +42,13 @@ class Pgsql
     {
         $sql = $this->pgsqlParams($sql);
         $result = @pg_query_params($this->_conn, $sql, $params);
-        if(!$result) {
-            \Console::danger('...'.pg_last_error($this->_conn));
+
+        if (!$result) {
+            throw new \DatabaseQueryException(pg_last_error($this->_conn));
         }
+
         $ofTheKing = [];
-        while($row = pg_fetch_array($result, NULL, PGSQL_ASSOC)) {
+        while ($row = pg_fetch_array($result, NULL, PGSQL_ASSOC)) {
             $ofTheKing[] = $row;
         }
         return $ofTheKing;
@@ -60,6 +65,9 @@ class Pgsql
     public function execute(string $sql, array $params = []): void
     {
         $sql = $this->pgsqlParams($sql);
-        pg_query_params($this->_conn, $sql, $params);
+
+        if (!pg_query_params($this->_conn, $sql, $params)) {
+            throw new \DatabaseQueryException(pg_last_error($this->_conn));
+        }
     }
 }

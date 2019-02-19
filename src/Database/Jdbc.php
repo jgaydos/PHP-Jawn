@@ -5,9 +5,9 @@ namespace Jawn\Database;
 /**
  * Class for using PHP JDBC Java bridge
  */
-class Jdbc
+class Jdbc implements Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlParamsTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 
@@ -34,13 +34,16 @@ class Jdbc
         } elseif ($connection->type === 'oracle') {
             $connStr = "jdbc:oracle:thin:$username/$password@$host:$port:$database";
         } else {
-            Console::danger('JDBC driver not configured!');
+            throw new \DatabaseQueryException('JDBC driver not configured.');
+
+            Console::danger();
         }
 
         $this->_conn = new \PJBridge($agentHost, $agentPort);
         $result = $this->_conn->connect($connStr, $username, $password);
+
         if (!$result) {
-            \Console::danger("Failed to connect\n");
+            throw new \DatabaseQueryException('Failed to connect.');
         }
 
     }
@@ -57,11 +60,17 @@ class Jdbc
     {
         $sql = $this->params($sql, $params);
         $cursor = $this->_conn->exec($sql);
+
+        if (!$cursor) {
+            throw new \DatabaseQueryException('Query failed.');
+        }
+
         $ofTheKing = [];
         while ($row = $this->_conn->fetch_array($cursor)) {
             $ofTheKing[] = $row;
         }
         return $ofTheKing;
+
         $this->_conn->free_result($cursor);
     }
 

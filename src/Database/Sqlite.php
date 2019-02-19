@@ -6,10 +6,9 @@ namespace Jawn\Database;
  * Sqlite: An in-process library that implements a self-contained, serverless,
  * zero-configuration, transactional SQL database engine.
  */
-class Sqlite
+class Sqlite implements \Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlImportTrait;
-    use \Traits\SqlParamsTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 

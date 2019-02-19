@@ -2,9 +2,9 @@
 
 namespace Jawn\Database;
 
-class Pdo
+class Pdo implements Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlParamsTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 
@@ -30,14 +30,13 @@ class Pdo
             $connStr = "jdbc:oracle:thin:$username/$password@$host:$port:$database";
             die('I have never tested this.');
         } else {
-            Console::danger('JDBC driver not configured!');
+            throw new \DatabaseConnectionException('PDO driver not configured!');
         }
 
         try {
             $this->_conn = $dbh = new PDO($connStr, $username, $password);
         } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "";
-            die();
+            throw new \DatabaseConnectionException($e->getMessage());
         }
     }
 
@@ -59,8 +58,7 @@ class Pdo
                 $ofTheKing[] = $row;
             }
         } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "";
-            die();
+            throw new \DatabaseQueryException($e->getMessage());
         }
         return $ofTheKing;
     }

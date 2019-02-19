@@ -2,9 +2,9 @@
 
 namespace Jawn\Database;
 
-class Oracle
+class Oracle implements Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlParamsTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 
@@ -26,6 +26,10 @@ class Oracle
         //Establish the connection
         $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SID=$service)))";
         $this->_conn = oci_connect($username, $password, $dsn);
+
+        if (!$this->_conn) {
+            throw new \DatabaseConnectionException(oci_error());
+        }
     }
 
     /**
@@ -41,7 +45,11 @@ class Oracle
     {
         $sql = $this->params($sql, $params);
         $stid = oci_parse($this->_conn, $sql);
-        oci_execute($stid);
+
+        if (!oci_execute($stid)) {
+            throw new \DatabaseQueryException(oci_error());
+        }
+
         $ofTheKing = [];
         while ($row = oci_fetch_assoc($stid)) {
             $ofTheKing[] = $row;
@@ -61,6 +69,10 @@ class Oracle
     {
         $sql = $this->params($sql, $params);
         $stid = oci_parse($this->_conn, $sql);
-        oci_execute($stid);
+
+        if (!oci_execute($stid)) {
+            throw new \DatabaseQueryException(oci_error());
+        }
+
     }
 }

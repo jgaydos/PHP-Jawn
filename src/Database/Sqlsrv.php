@@ -4,9 +4,9 @@ namespace Jawn\Database;
 
 use Console;
 
-class Sqlsrv implements Interfaces\DatabaseInterface
+class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
 {
-    use \Traits\SqlImportTrait;
+    use \Jawn\Traits\SqlImportTrait;
 
     private $_conn;
 
@@ -34,8 +34,8 @@ class Sqlsrv implements Interfaces\DatabaseInterface
             ]
         );
 
-        if($this->_conn === false) {
-            die(print_r( sqlsrv_errors(), true));
+        if (!$this->_conn) {
+            throw new \DatabaseConnectionException(sqlsrv_errors());
         }
     }
 
@@ -55,13 +55,7 @@ class Sqlsrv implements Interfaces\DatabaseInterface
         $stmt = sqlsrv_query($this->_conn, $sql, $params);
 
         if ($stmt === false && $errors) {
-            foreach (sqlsrv_errors() as $error) {
-                Console::danger("...I am in great pain. Please help me!"
-                    . "SQLSTATE: {$error['SQLSTATE']}" . PHP_EOL
-                    . "code: {$error['code']}" . PHP_EOL
-                    . "message: {$error['message']}" . PHP_EOL
-                );
-            }
+            throw new \DatabaseQueryException(sqlsrv_errors());
         }
 
         $ofTheKing = [];
