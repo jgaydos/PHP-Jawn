@@ -4,6 +4,7 @@ namespace Jawn;
 
 /**
  * Simple way to thread NTS PHP
+ * Found on php.net I think
  */
 class Thread
 {
@@ -13,6 +14,8 @@ class Thread
 
     /**
      * Add a thread to queue
+     * @param   object  $function   Anonymous function
+     * @return  void
      */
     public function add(object $function): void
     {
@@ -21,6 +24,8 @@ class Thread
 
     /**
      * Set a callback
+     * @param   object  $function   Anonymous function
+     * @return  void
      */
     public function callback(object $function): void
     {
@@ -29,6 +34,8 @@ class Thread
 
     /**
      * Set size of shared memory
+     * @param   int    $mb  Size of shared memory in MB
+     * @return  void
      */
     public function size(int $mb): void
     {
@@ -37,6 +44,7 @@ class Thread
 
     /**
      * Run all threads in queue
+     * @return  void
      */
     public function run(): void
     {

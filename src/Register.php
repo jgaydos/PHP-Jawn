@@ -8,6 +8,10 @@ use \Monolog\ErrorHandler;
 
 class Register
 {
+    /**
+     * Register execution timer
+     * @return  void
+     */
     public static function exectionTimer(): void
     {
         $start_time = microtime(true);
@@ -18,6 +22,10 @@ class Register
         });
     }
 
+    /**
+     * Register logger
+     * @return  void
+     */
     public static function logger(): void
     {
         $logger = new NewLogger('Rick');
