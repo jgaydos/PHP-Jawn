@@ -51,11 +51,12 @@ class Console
     public static function table(array ...$data): void
     {
         foreach ($data as $set) {
-            $table = new jc21\CliTable();
+            $table = new \jc21\CliTable();
             $keys = array_keys($set[key($set)] ?? []);
 
-            foreach ($keys ?? [] as $key)
+            foreach ($keys ?? [] as $key) {
                 $table->addField($key, $key, 'grey');
+            }
 
             $table->setTableColor('red');
             $table->setHeaderColor('cyan');
@@ -71,7 +72,9 @@ class Console
         if (self::$verbose) {
             echo "\033[0;".self::$colors[$color]."m";
             echo $str;
-            if ($str != '') self::reset();
+            if ($str != '') {
+                self::reset();
+            }
         }
     }
 
@@ -208,13 +211,14 @@ class Console
      * Supported formats
      * --argv value
      * --argv=value
+     * @param   string  $name   Param name
      */
     public function get(string $name): string
     {
         global $argv;
         foreach ($argv as $key => $value) {
             if ("--$name=" === substr($value, 0, strlen("--$name="))) {
-                return explode('=', $value, 2)[1];
+                return explode('=', $value, 2)[1] ?? '';
             } elseif ("--$name" === $value) {
                 if (isset($argv[($key + 1)])) {
                     return $argv[($key + 1)];
@@ -227,8 +231,10 @@ class Console
 
     /**
      * Check if cli argument is set
+     * @param   string  $name   Param name
+     * @return  bool
      */
-    public static function has(string $name): string
+    public static function has(string $name): bool
     {
         global $argv;
         foreach ($argv as $key => $value) {
