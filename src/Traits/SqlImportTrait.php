@@ -10,12 +10,10 @@ trait SqlImportTrait
      * @access  public
      * @param   string  $table    Table name
      * @param   array   $data    A single array or an array of arrays
-     * @param   bool    $errors Show/Stop on errors or not
      */
     public function import(
         string $table,
         array $data,
-        bool $errors = true,
         array $keys = [],
         bool $update = true
     ): void {
@@ -81,12 +79,12 @@ trait SqlImportTrait
         for($i = 0; $i < $c = count($sql); ++$i) {
             $buffer .= $sql[$i];
             if ($i % 20 === 0) {
-                $this->query($buffer, [], $errors, false);
+                $this->query($buffer, []);
                 $buffer = '';
             }
         }
         if (strlen($buffer) !== 0) {
-            $this->query($buffer, [], $errors, false);
+            $this->query($buffer, []);
         }
     }
 }
