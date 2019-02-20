@@ -26,8 +26,14 @@ class Pdo implements Jawn\Interfaces\DatabaseInterface
             $connStr = "JDBC:datadirect:openedge://$host:$port;DatabaseName=$database;";
         } elseif ($connection->type === 'sqlserver') {
             $connStr = "jdbc:sqlserver://$host:$port;databasename=$database;";
+        } elseif ($connection->type === 'cubrid') {
+            $connStr = "cubrid:dbname=$database;host=$host;port=$port";
         } elseif ($connection->type === 'oracle') {
             $connStr = "jdbc:oracle:thin:$username/$password@$host:$port:$database";
+        } elseif ($connection->type === 'mysql') {
+            $connStr = "mysql:dbname=$database;$host=$host:$port";
+        } elseif ($connection->type === 'pgsql') {
+            $connStr = "pgsql:dbname=$database;host=$host:$port";
         } else {
             throw new \DatabaseConnectionException('PDO driver not configured!');
         }
