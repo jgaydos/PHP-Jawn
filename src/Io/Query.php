@@ -31,6 +31,6 @@ class Query
      */
     public static function load(string $path, array $data, array $options = []): void
     {
-        echo 'Not implimented'.PHP_EOL;
+        throw new \IoNotImplementedException('Not implimented');
     }
 }

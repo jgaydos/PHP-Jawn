@@ -17,7 +17,7 @@ class Html
      */
     public static function extract(string $path, array $options = []): array
     {
-        echo 'Not implimented'.PHP_EOL;
+        throw new \IoNotImplementedException('Not implimented');
     }
 
     /**
