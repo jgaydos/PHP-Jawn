@@ -27,7 +27,7 @@ class ETL
      * @param array $options
      * @return ETL
      */
-    public function extract(/*string $type, $source, array $options = [], string $handle = 'morty'*/): ETL
+    public function extract(): ETL
     {
         $args = func_get_args();
 
@@ -71,7 +71,7 @@ class ETL
      * @param string $handle
      * @return ETL
      */
-    public function transform(/*string $query, array $params = [], string $handle = 'morty'*/): ETL
+    public function transform(): ETL
     {
         $args = func_get_args();
 
@@ -101,7 +101,7 @@ class ETL
      * @param string $handle
      * @return ETL
      */
-    public function load(/*string $type, $destination, array $options = [], string $handle = 'morty'*/)
+    public function load()
     {
         $args = func_get_args();
 

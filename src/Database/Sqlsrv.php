@@ -47,14 +47,11 @@ class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
      * @param   array   $params Query parameters
      * @return  array   $ofTheKing    Query results
      */
-    public function query(
-        string $sql,
-        array $params = [],
-        bool $errors = true
-    ): array {
+    public function query(string $sql, array $params = []): array
+    {
         $stmt = sqlsrv_query($this->_conn, $sql, $params);
 
-        if ($stmt === false && $errors) {
+        if ($stmt === false) {
             throw new \DatabaseQueryException(sqlsrv_errors());
         }
 
@@ -76,8 +73,8 @@ class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
      * @param   array   $params Query parameters
      * @return  void
      */
-    public function execute($sql, $params = [], $errors = true): void
+    public function execute($sql, $params = []): void
     {
-        $this->query($sql, $params, $errors);
+        $this->query($sql, $params);
     }
 }

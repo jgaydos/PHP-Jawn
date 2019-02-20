@@ -38,7 +38,6 @@ class Oracle implements Jawn\Interfaces\DatabaseInterface
      * @access  public
      * @param   string  $sql    SQL query
      * @param   array   $params Query parameters
-     * @param   bool    $errors Show/Stop on errors or not
      * @return  array   $ofTheKing    Query results
      */
     public function query(string $sql, array $params = []): array
