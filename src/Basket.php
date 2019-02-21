@@ -26,7 +26,7 @@ class Basket
             $name = self::$default_database;
         }
         if (isset(self::$databases[$name])) {
-            $class = 'Database\\'.ucfirst(strtolower(self::$databases[$name]->driver));
+            $class = 'Jawn\Database\\'.ucfirst(strtolower(self::$databases[$name]->driver));
             return new $class(self::$databases[$name]);
         }
         Console::danger("Database connection {$name} not found!");
@@ -41,7 +41,7 @@ class Basket
             $name = self::$default_remote;
         }
         if (isset(self::$remotes[$name])) {
-            $class = 'Remote\\'.ucfirst(strtolower(self::$remotes[$name]->protocol));
+            $class = 'Jawn\Remote\\'.ucfirst(strtolower(self::$remotes[$name]->protocol));
             return new $class(self::$remotes[$name]);
         }
         Console::danger("Remote connection {$name} not found!");
@@ -81,7 +81,7 @@ class Basket
         self::$default_remote = $config->remote->default ?? '';
 
         foreach ($config->database->connections ?? [] as $key => $item) {
-            $class = 'Database\\'. ucfirst(strtolower($item->driver));
+            $class = 'Jawn\Database\\'. ucfirst(strtolower($item->driver));
             if (!class_exists($class)) {
                 Console::danger("Database driver {$item->driver} does not exist!");
             }
@@ -90,7 +90,7 @@ class Basket
         }
 
         foreach ($config->remote->connections ?? [] as $key => $item) {
-            $class = 'Remote\\' . ucfirst(strtolower($item->protocol));
+            $class = 'Jawn\Remote\\' . ucfirst(strtolower($item->protocol));
             if (!class_exists($class)) {
                 Console::danger("Remote protocol {$item->protocol} does not exist!");
             }
