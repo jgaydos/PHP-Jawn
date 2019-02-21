@@ -31,16 +31,16 @@ class ETL
     {
         $args = func_get_args();
 
-        if ($this->overload($args, ['string', 'string|array', 'string'])) {
-            $type = $args[0];
-            $source = $args[1];
-            $options = [];
-            $handle = $args[2] ?? 'morty';
-        } elseif ($this->overload($args, ['string', 'string|array', 'array', 'string'])) {
+        if (is_array($args[2] ?? '')) {
             $type = $args[0];
             $source = $args[1];
             $options = $args[2] ?? [];
             $handle = $args[3] ?? 'morty';
+        } else {
+            $type = $args[0];
+            $source = $args[1];
+            $options = [];
+            $handle = $args[2] ?? 'morty';
         }
 
         Console::info("E -> $type as $handle", '');
@@ -51,7 +51,7 @@ class ETL
             return $this;
         }
 
-        $class = 'Io\\'.$type;
+        $class = 'Jawn\Io\\'.$type;
         if (!class_exists($class)) {
             Console::danger("...I am in great pain, Please help me: $type does not exist!");
         }
@@ -75,14 +75,14 @@ class ETL
     {
         $args = func_get_args();
 
-        if ($this->overload($args, ['string', 'string'])) {
-            $query = $args[0];
-            $params = [];
-            $handle = $args[1] ?? 'morty';
-        } elseif ($this->overload($args, ['string', 'array', 'string'])) {
+        if (is_array($args[0] ?? '')) {
             $query = $args[0];
             $params = $args[1] ?? [];
             $handle = $args[2] ?? 'morty';
+        } else {
+            $query = $args[0];
+            $params = [];
+            $handle = $args[1] ?? 'morty';
         }
 
         Console::info("T -> ".($handle !== '' ? "$handle = " : '')."(".substr(str_replace(["\r", "\n", ' '], ' ', $query), 0, 30)."...)", '');
@@ -105,16 +105,16 @@ class ETL
     {
         $args = func_get_args();
 
-        if ($this->overload($args, ['string', 'string|array', 'string'])) {
-            $type = $args[0];
-            $destination = $args[1];
-            $options = [];
-            $handle = $args[2] ?? 'morty';
-        } elseif ($this->overload($args, ['string', 'string|array', 'array', 'string'])) {
+        if (is_array($args[2])) {
             $type = $args[0];
             $destination = $args[1];
             $options = $args[2] ?? [];
             $handle = $args[3] ?? 'morty';
+        } else {
+            $type = $args[0];
+            $destination = $args[1];
+            $options = [];
+            $handle = $args[2] ?? 'morty';
         }
 
         Console::info("L -> $type $destination".($handle !== '' ? " with $handle" : ''), '');
@@ -125,7 +125,7 @@ class ETL
         }
 
         // everything else
-        $class = 'Io\\'.ucfirst($type);
+        $class = 'Jawn\Io\\'.ucfirst($type);
         if (!class_exists($class)) {
             Console::danger("...I am in great pain. Please help me, $type does not exist!");
         }
