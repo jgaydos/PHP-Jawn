@@ -16,7 +16,7 @@ class Query
     {
         $query = $path;
         $params = $options['params'] ?? [];
-        $db = \DB::connection($options['connection'] ?? '') ?? [];
+        $db = \Jawn\DB::connection($options['connection'] ?? '') ?? [];
         return $db->query($query, $params) ?? [];
     }
 
