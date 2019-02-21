@@ -56,7 +56,7 @@ trait SqlImportTrait
                     $where .= " AND [$key] = $item[$key]";
                 }
                 $where = substr($where, 5);
-                if (count($this->select("SELECT 1 AS a FROM [$table] WHERE $where;", [], $errors)) > 0) {
+                if (count($this->query("SELECT 1 AS a FROM [$table] WHERE $where;", [])) > 0) {
                     // UPDATE
                     $set = '';
                     foreach ($item as $key => $value) {
