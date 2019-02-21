@@ -16,7 +16,7 @@ class Table
     {
         $table = $path;
         $params = $options['params'] ?? [];
-        $db = \DB::connection($options['connection'] ?? '') ?? [];
+        $db = \Jawn\DB::connection($options['connection'] ?? '') ?? [];
         return $db->query("SELECT * FROM $table", $params) ?? [];
     }
 
@@ -35,7 +35,7 @@ class Table
         $keys = $options['keys'] ?? []; // db column => array index
         $update = $options['update'] ?? true;
         $errors = $options['errors'] ?? true;
-        $db = \DB::connection($options['connection'] ?? '') ?? [];
-        $db->import($table, $data, $errors, $keys, $update) ?? [];
+        $db = \Jawn\DB::connection($options['connection'] ?? '') ?? [];
+        $db->import($table, $data, $keys, $update) ?? [];
     }
 }
