@@ -1,5 +1,5 @@
 {
-    "name": "jgaydos/PHP-Jawn",
+    "name": "jgaydos/php-jawn",
     "minimum-stability": "dev",
     "require": {
         "phpoffice/phpspreadsheet": "master",
