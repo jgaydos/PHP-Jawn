@@ -55,7 +55,7 @@ class Formstack
      * @param	string	$formID		Vender form ID
      * @return  json   $json  Form meta info
      */
-    public function form(int $formID): array
+    public function form(int $formID)
     {
         $url = "https://www.formstack.com/api/v2/form/{$formID}.json";
         $ofTheKing = $this->curl($url);
