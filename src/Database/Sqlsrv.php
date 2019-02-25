@@ -35,7 +35,7 @@ class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
         );
 
         if (!$this->_conn) {
-            throw new \DatabaseConnectionException(sqlsrv_errors());
+            throw new \DatabaseConnectionException(json_encode(sqlsrv_errors()));
         }
     }
 
@@ -52,7 +52,7 @@ class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
         $stmt = sqlsrv_query($this->_conn, $sql, $params);
 
         if ($stmt === false) {
-            throw new \DatabaseQueryException(sqlsrv_errors());
+            throw new \DatabaseQueryException(json_encode(sqlsrv_errors()));
         }
 
         $ofTheKing = [];
