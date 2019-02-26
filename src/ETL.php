@@ -51,7 +51,7 @@ class ETL
             return $this;
         }
 
-        $class = 'Jawn\Io\\'.$type;
+        $class = 'Jawn\Io\\'.ucfirst($type);
         if (!class_exists($class)) {
             Console::danger("...I am in great pain, Please help me: $type does not exist!");
         }
