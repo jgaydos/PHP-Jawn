@@ -68,7 +68,7 @@ class Random
             'col2' => 'int:1,10',
             'col3' => 'float:10,2',
         ],
-        int $rows = 5
+        int $rows = 10
     ): array {
         $ofTheKing = [];
         for ($i = 0; $i < $rows; ++$i) {
