@@ -8,12 +8,12 @@ namespace Jawn\Remote;
  */
 class Sftp
 {
-    private $conn;
+    private $_conn;
 
     public function __construct(object $connection)
     {
         //Establish the connection
-        $this->conn = new \phpseclib\Net\SFTP($connection->host);
+        $this->_conn = new \phpseclib\Net\SFTP($connection->host);
 
         if (isset($connection->key)) {
             $privatekey = new \phpseclib\Crypt\RSA();
@@ -23,7 +23,7 @@ class Sftp
             $key = $connection->password;
         }
 
-        if (!$this->conn->login($connection->username, $key))
+        if (!$this->_conn->login($connection->username, $key))
             exit('Login Failed');
     }
 
@@ -35,7 +35,7 @@ class Sftp
      */
     public function get(string $source, string $target): bool
     {
-        return $this->conn->get($source, $target);
+        return $this->_conn->get($source, $target);
 
         /* // this also works
         $conn = ssh2_connect($host, $port);
@@ -52,7 +52,7 @@ class Sftp
      */
     public function put(string $source, string $target): bool
     {
-        return $this->conn->put($target, $source, 1 /** 1 makes it file */);
+        return $this->_conn->put($target, $source, 1 /** 1 makes it file */);
     }
 
     /**
@@ -63,7 +63,7 @@ class Sftp
      */
     public function write(string $source, string $target): bool
     {
-        return $this->conn->put($target, $source);
+        return $this->_conn->put($target, $source);
     }
 
 }

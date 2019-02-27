@@ -7,12 +7,12 @@ namespace Jawn\Remote;
  */
 class Ssh
 {
-    private $conn;
+    private $_conn;
 
     public function __construct(object $connection)
     {
         //Establish the connection
-        $this->conn = new \phpseclib\Net\SSH2($connection->host);
+        $this->_conn = new \phpseclib\Net\SSH2($connection->host);
 
         if (isset($connection->key)) {
             $privatekey = new \phpseclib\Crypt\RSA();
@@ -22,7 +22,7 @@ class Ssh
             $key = $connection->password;
         }
 
-        if (!$this->conn->login($connection->username, $key)) {
+        if (!$this->_conn->login($connection->username, $key)) {
             exit('Login Failed');
         }
     }
@@ -32,6 +32,6 @@ class Ssh
      */
     public function command(string $cmd): string
     {
-        return $this->conn->exec($cmd);
+        return $this->_conn->exec($cmd);
     }
 }
