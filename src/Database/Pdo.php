@@ -2,7 +2,7 @@
 
 namespace Jawn\Database;
 
-class Pdo implements Jawn\Interfaces\DatabaseInterface
+class Pdo implements \Jawn\Interfaces\DatabaseInterface
 {
     use \Jawn\Traits\SqlParamsTrait;
 
