@@ -2,7 +2,7 @@
 
 namespace Jawn\Database;
 
-class Pgsql implements Jawn\Interfaces\DatabaseInterface
+class Pgsql implements \Jawn\Interfaces\DatabaseInterface
 {
     use \Jawn\Traits\SqlParamsTrait;
 
