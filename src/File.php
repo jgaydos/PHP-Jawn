@@ -291,7 +291,13 @@ class File
         }
     }
 
-    public function zipFolder($source, $destination)
+    /**
+     * Zips a folder
+     * @param   string  $source
+     * @param   string  $destination
+     * @return  bool
+     */
+    public function zipFolder(string $source, string $destination): bool
     {
         if (extension_loaded('zip')) {
             if (file_exists($source)) {
