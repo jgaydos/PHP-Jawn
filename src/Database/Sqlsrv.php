@@ -7,6 +7,7 @@ use Console;
 class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
 {
     use \Jawn\Traits\SqlImportTrait;
+    use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
 
@@ -49,7 +50,8 @@ class Sqlsrv implements \Jawn\Interfaces\DatabaseInterface
      */
     public function query(string $sql, array $params = []): array
     {
-        $stmt = sqlsrv_query($this->_conn, $sql, $params);
+        $sql = $this->params($sql, $params);
+        $stmt = sqlsrv_query($this->_conn, $sql);
 
         if ($stmt === false) {
             throw new \DatabaseQueryException(json_encode(sqlsrv_errors()));
