@@ -25,7 +25,7 @@ class Oracle implements \Jawn\Interfaces\DatabaseInterface
 
         //Establish the connection
         $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SID=$service)))";
-        $this->_conn = oci_connect($username, $password, $dsn);
+        $this->_conn = \oci_connect($username, $password, $dsn);
 
         if (!$this->_conn) {
             throw new \DatabaseConnectionException(oci_error());
