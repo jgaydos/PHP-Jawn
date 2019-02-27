@@ -7,7 +7,7 @@ namespace Jawn;
  */
 class Buffer
 {
-    private static $buffer = null; // will be cleared upon calling on()
+    private static $_buffer = null; // will be cleared upon calling on()
 
     /**
      * Turn on output buffering
@@ -15,7 +15,7 @@ class Buffer
      */
     public static function on(): void
     {
-        self::$buffer = null;
+        self::$_buffer = null;
         ob_start();
     }
 
@@ -28,7 +28,7 @@ class Buffer
         if (ob_get_contents() !== false) {
             return ob_get_contents();
         }
-        return self::$buffer;
+        return self::$_buffer;
     }
 
     /**
@@ -37,7 +37,7 @@ class Buffer
      */
     public static function off(): string
     {
-        self::$buffer = ob_get_clean();
-        return self::$buffer;
+        self::$_buffer = ob_get_clean();
+        return self::$_buffer;
     }
 }

@@ -7,7 +7,7 @@ namespace Jawn;
  */
 class Console
 {
-    private static $colors = [
+    private static $_colors = [
         'black'  => 30,
         'red'    => 31,
         'green'  => 32,
@@ -18,7 +18,7 @@ class Console
         'white'  => 37
     ];
 
-    private static $verbose = true;
+    private static $_verbose = true;
 
     /**
      * This is used to echo the progress of a task on the command line.
@@ -69,8 +69,8 @@ class Console
 
     private static function text(string $color, string $str): void
     {
-        if (self::$verbose) {
-            echo "\033[0;".self::$colors[$color]."m";
+        if (self::$_verbose) {
+            echo "\033[0;".self::$_colors[$color]."m";
             echo $str;
             if ($str != '') {
                 self::reset();
@@ -83,7 +83,7 @@ class Console
      */
     public static function verbose(bool $verbose = true): void
     {
-        self::$verbose = $verbose;
+        self::$_verbose = $verbose;
     }
 
     /**

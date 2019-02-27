@@ -9,25 +9,23 @@ namespace Jawn;
  */
 class Basket
 {
-    private static $instance;
-
-    private static $default_database;
-    public static $databases = [];
-    private static $default_remote;
-    public static $remotes = [];
-    private static $project_dir;
+    private static $_default_database;
+    public static $_databases = [];
+    private static $_default_remote;
+    public static $_remotes = [];
+    private static $_project_dir;
 
     /**
      * Return database connection object
      */
     public static function database(string $name = '')
     {
-        if ($name === '' && self::$default_database !== '') {
-            $name = self::$default_database;
+        if ($name === '' && self::$_default_database !== '') {
+            $name = self::$_default_database;
         }
-        if (isset(self::$databases[$name])) {
-            $class = 'Jawn\Database\\'.ucfirst(strtolower(self::$databases[$name]->driver));
-            return new $class(self::$databases[$name]);
+        if (isset(self::$_databases[$name])) {
+            $class = 'Jawn\Database\\'.ucfirst(strtolower(self::$_databases[$name]->driver));
+            return new $class(self::$_databases[$name]);
         }
         Console::danger("Database connection {$name} not found!");
     }
@@ -37,12 +35,12 @@ class Basket
      */
     public static function remote(string $name = '')
     {
-        if ($name === '' && self::$default_remote !== '') {
-            $name = self::$default_remote;
+        if ($name === '' && self::$_default_remote !== '') {
+            $name = self::$_default_remote;
         }
-        if (isset(self::$remotes[$name])) {
-            $class = 'Jawn\Remote\\'.ucfirst(strtolower(self::$remotes[$name]->protocol));
-            return new $class(self::$remotes[$name]);
+        if (isset(self::$_remotes[$name])) {
+            $class = 'Jawn\Remote\\'.ucfirst(strtolower(self::$_remotes[$name]->protocol));
+            return new $class(self::$_remotes[$name]);
         }
         Console::danger("Remote connection {$name} not found!");
     }
@@ -54,13 +52,13 @@ class Basket
      */
     public static function projectDir(string $name = ''): string
     {
-        if (self::$project_dir === '') {
+        if (self::$_project_dir === '') {
             Console::danger('Project dir not set for ' . gethostname());
         }
         if ($name !== '') {
-            return rtrim(self::$project_dir, '/').'/'.rtrim($name, '/');
+            return rtrim(self::$_project_dir, '/').'/'.rtrim($name, '/');
         }
-        return rtrim(self::$project_dir, '/');
+        return rtrim(self::$_project_dir, '/');
     }
 
     /**
@@ -77,8 +75,8 @@ class Basket
         $config = json_decode(file_get_contents($location));
 
         // set defaults
-        self::$default_database = $config->database->default ?? '';
-        self::$default_remote = $config->remote->default ?? '';
+        self::$_default_database = $config->database->default ?? '';
+        self::$_default_remote = $config->remote->default ?? '';
 
         foreach ($config->database->connections ?? [] as $key => $item) {
             $class = 'Jawn\Database\\'. ucfirst(strtolower($item->driver));
@@ -86,7 +84,7 @@ class Basket
                 Console::danger("Database driver {$item->driver} does not exist!");
             }
 
-            self::$databases[$key] = $item;
+            self::$_databases[$key] = $item;
         }
 
         foreach ($config->remote->connections ?? [] as $key => $item) {
@@ -95,16 +93,16 @@ class Basket
                 Console::danger("Remote protocol {$item->protocol} does not exist!");
             }
 
-            self::$remotes[$key] = $item;
+            self::$_remotes[$key] = $item;
         }
 
         // set project dir
-        self::$project_dir = '';
+        self::$_project_dir = '';
         foreach ($config->project_dirs ?? [] as $key => $item) {
             if ($key !== gethostname()) {
                 continue;
             }
-            self::$project_dir = $item;
+            self::$_project_dir = $item;
             break;
         }
     }

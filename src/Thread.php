@@ -8,9 +8,9 @@ namespace Jawn;
  */
 class Thread
 {
-    private $threads = [];
-    private $size = 1048576;
-    private $callback;
+    private $_threads = [];
+    private $_size = 1048576;
+    private $_callback;
 
     /**
      * Add a thread to queue
@@ -19,7 +19,7 @@ class Thread
      */
     public function add(object $function): void
     {
-        $this->threads[] = $function;
+        $this->_threads[] = $function;
     }
 
     /**
@@ -29,7 +29,7 @@ class Thread
      */
     public function callback(object $function): void
     {
-        $this->callback = $function;
+        $this->_callback = $function;
     }
 
     /**
@@ -39,7 +39,7 @@ class Thread
      */
     public function size(int $mb): void
     {
-        $this->size = (pow(1024,2) * $mb);
+        $this->_size = (pow(1024,2) * $mb);
     }
 
     /**
@@ -52,25 +52,25 @@ class Thread
             ftok(__FILE__, chr(0)),
             "c",
             0644,
-            count($this->threads)
+            count($this->_threads)
         );
         $shared_memory_ids = (object) array();
 
-        for ($i = 1; $i <= count($this->threads); ++$i) {
+        for ($i = 1; $i <= count($this->_threads); ++$i) {
             $shared_memory_ids->$i = shmop_open(
                 ftok(__FILE__, chr($i)),
                 "c",
                 0644,
-                $this->size
+                $this->_size
             );
         }
 
-        for ($i = 1; $i <= count($this->threads); ++$i) {
+        for ($i = 1; $i <= count($this->_threads); ++$i) {
             $pid = pcntl_fork();
             if (!$pid) {
                 if ($i === 1)
                     usleep(100000);
-                $shared_memory_data = $this->threads[$i - 1]();
+                $shared_memory_data = $this->_threads[$i - 1]();
                 shmop_write($shared_memory_ids->$i, $shared_memory_data, 0);
                 shmop_write($shared_memory_monitor, "1", $i-1);
                 exit($i);
@@ -82,15 +82,15 @@ class Thread
                 shmop_read(
                     $shared_memory_monitor,
                     0,
-                    count($this->threads)) == str_repeat("1", count($this->threads))
+                    count($this->_threads)) == str_repeat("1", count($this->_threads))
             ) {
                 $result = array();
                 foreach ($shared_memory_ids as $key => $value) {
-                    $result[$key-1] = shmop_read($shared_memory_ids->$key, 0, $this->size);
+                    $result[$key-1] = shmop_read($shared_memory_ids->$key, 0, $this->_size);
                     shmop_delete($shared_memory_ids->$key);
                 }
                 shmop_delete($shared_memory_monitor);
-                $callback = $this->callback;
+                $callback = $this->_callback;
                 $callback($result);
             }
         }
