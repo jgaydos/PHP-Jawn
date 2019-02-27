@@ -2,7 +2,7 @@
 
 namespace Jawn\Database;
 
-class Oracle implements Jawn\Interfaces\DatabaseInterface
+class Oracle implements \Jawn\Interfaces\DatabaseInterface
 {
     use \Jawn\Traits\SqlParamsTrait;
 
