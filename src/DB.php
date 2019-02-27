@@ -37,7 +37,7 @@ class DB
                     $query = $args[1];
                     $params = $args[2] ?? [];
                 }
-                
+
                 $ofTheKing = [];
                 Console::info("Q -> Querying $name (" . substr(str_replace("  ", '', str_replace("\n", ' ', $query)), 0, 30) . '...)', '');
                 if (preg_match('%^(select)%is', $query) > 0) {
