@@ -11,13 +11,13 @@ class DB
     {
         $obj = new class
         {
-            private $connection = '';
-            private $table;
+            private $_connection = '';
+            private $_table;
 
-            private $select = '*';
-            private $where = [];
+            private $_select = '*';
+            private $_where = [];
 
-            private $inserts = [];
+            private $_inserts = [];
 
             public function connection($connection = ''): object
             {
@@ -39,58 +39,58 @@ class DB
 
             public function delete()
             {
-                DB::query($this->connection, 'DELETE FROM [' . $this->table . ']');
+                DB::query($this->_connection, 'DELETE FROM [' . $this->_table . ']');
             }
 
             public function get()
             {
-                $query = 'SELECT ' . $this->select . ' FROM [' . $this->table . ']';
+                $query = 'SELECT ' . $this->_select . ' FROM [' . $this->_table . ']';
 
-                if (count($this->where) > 0) {
+                if (count($this->_where) > 0) {
                     $query .= ' WHERE';
-                    foreach ($this->where as $condition) {
+                    foreach ($this->_where as $condition) {
                         $query .= ' ' . $condition;
                     }
                 }
 
-                return DB::query($this->connection, $query);
+                return DB::query($this->_connection, $query);
             }
 
             public function select($columns)
             {
-                $this->select = '';
+                $this->_select = '';
                 foreach ($columns as $column) {
-                    $this->select .= $column . ', ';
+                    $this->_select .= $column . ', ';
                 }
-                $this->select = substr($this->select, 0, -2);
+                $this->_select = substr($this->_select, 0, -2);
                 return $this;
             }
 
             public function selectRaw($columns)
             {
-                $this->select = $columns;
+                $this->_select = $columns;
             }
 
             public function where($one, $two, $three = null)
             {
                 if (is_null($three)) {
-                    $this->where[] = $one . ' = ' . $two;
+                    $this->_where[] = $one . ' = ' . $two;
                 } else {
-                    $this->where[] = $one . ' ' . $two . ' ' . $three;
+                    $this->_where[] = $one . ' ' . $two . ' ' . $three;
                 }
                 return $this;
             }
 
             public function whereRaw($condition)
             {
-                $this->where[] = $condition;
+                $this->_where[] = $condition;
                 return $this;
             }
 
             public function table($connection, $table)
             {
-                $this->connection = $connection;
-                $this->table = $table;
+                $this->_connection = $connection;
+                $this->_table = $table;
                 return $this;
             }
 
@@ -99,7 +99,7 @@ class DB
                 if (empty($data)) {
                     throw new Exception('Import: $data is empty');
                 }
-                if (empty($this->table)) {
+                if (empty($this->_table)) {
                     throw new Exception('Import: Table must be set before import');
                 }
 
@@ -109,17 +109,17 @@ class DB
                         return (is_string($v) ? "'" . str_replace("'", "''", $v) . "'" : (($v instanceof DateTime)
                             ? "'{$v->format('Y-m-d H:i:s')}'" : ((is_null($v)) ? "NULL" : $v)));
                     }, $item));
-                    $this->inserts[] = "INSERT INTO [$this->table] ($columns) VALUES ($values);";
+                    $this->_inserts[] = "INSERT INTO [$this->_table] ($columns) VALUES ($values);";
                 }
                 return $this;
             }
 
             public function run($chunk = 1)
             {
-                for ($i = 0; $i < $count = count($this->inserts); $i += $chunk) {
-                    DB::query($this->connection, implode(' ', array_slice($this->inserts, $i, $chunk)));
+                for ($i = 0; $i < $count = count($this->_inserts); $i += $chunk) {
+                    DB::query($this->_connection, implode(' ', array_slice($this->_inserts, $i, $chunk)));
                 }
-                $this->inserts = []; // clear out after processing
+                $this->_inserts = []; // clear out after processing
             }
         };
         if (count($argv) === 0) {
