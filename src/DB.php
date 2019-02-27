@@ -24,8 +24,20 @@ class DB
                 return Basket::database($connection);
             }
 
-            public function query($name = '', $query, $params = [])
+            public function query(/*$name = '', $query, $params = []*/)
             {
+                $args = func_get_args();
+
+                if (is_array($args[1] ?? [])) {
+                    $name = '';
+                    $query = $args[0];
+                    $params = $args[1] ?? [];
+                } else {
+                    $name = $args[0];
+                    $query = $args[1];
+                    $params = $args[2] ?? [];
+                }
+                
                 $ofTheKing = [];
                 Console::info("Q -> Querying $name (" . substr(str_replace("  ", '', str_replace("\n", ' ', $query)), 0, 30) . '...)', '');
                 if (preg_match('%^(select)%is', $query) > 0) {
