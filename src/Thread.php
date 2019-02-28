@@ -12,6 +12,11 @@ class Thread
     private $_size = 1048576;
     private $_callback;
 
+    public function __construct()
+    {
+        $this->_callback = function () {};
+    }
+    
     /**
      * Add a thread to queue
      * @param   object  $function   Anonymous function
