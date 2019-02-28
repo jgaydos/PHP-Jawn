@@ -263,68 +263,58 @@ class File
      * Adds a file to a ZIP archive from the given path.
      * Overrides/Creates archives
      * @param   string  $source
-     * @param   string|array  $files
+     * @param   string|array  $destination
      * @return  bool
      */
-    public function zip(string $source, $files): bool
+    public function zip($source, string $destination): bool
     {
-        Console::info('Zip: '.$source, '');
-        $zip = new ZipArchive;
-        if ($zip->open($source, ZIPARCHIVE::CREATE | ZipArchive::OVERWRITE) === true) {
-            if (is_array($files)) {
-                foreach ($files as $key => $value) {
-                    if (is_int($key)) {
-                        $zip->addFile($value, basename($value));
-                    } else {
-                        $zip->addFile($key, $value);
+        if (is_file($source)) {
+            $zip = new ZipArchive;
+            if ($zip->open($destination, ZIPARCHIVE::CREATE | ZipArchive::OVERWRITE) === true) {
+                if (is_array($files)) {
+                    foreach ($files as $key => $value) {
+                        if (is_int($key)) {
+                            $zip->addFile($value, basename($value));
+                        } else {
+                            $zip->addFile($key, $value);
+                        }
                     }
+                } else {
+                    $zip->addFile($files, basename($files));
                 }
+                $zip->close();
+                return true;
             } else {
-                $zip->addFile($files, basename($files));
+                return false;
             }
-            $zip->close();
-            Console::success('...Wubbalubbadubdub!');
-            return true;
-        } else {
-            Console::danger('...I am in great pain, please help me');
+        } elseif (is_dir($source)) {
+            if (extension_loaded('zip')) {
+                if (file_exists($source)) {
+                    $zip = new ZipArchive();
+                    if ($zip->open($destination, ZIPARCHIVE::CREATE)) {
+                        $source = realpath($source);
+                        if (is_dir($source)) {
+                            $iterator = new RecursiveDirectoryIterator($source);
+                            // skip dot files while iterating
+                            $iterator->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
+                            $files = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+                            foreach ($files as $file) {
+                                $file = realpath($file);
+                                if (is_dir($file)) {
+                                    $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                                } elseif (is_file($file)) {
+                                    $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                                }
+                            }
+                        } elseif (is_file($source)) {
+                            $zip->addFromString(basename($source), file_get_contents($source));
+                        }
+                    }
+                    return $zip->close();
+                }
+            }
             return false;
         }
-    }
-
-    /**
-     * Zips a folder
-     * @param   string  $source
-     * @param   string  $destination
-     * @return  bool
-     */
-    public function zipFolder(string $source, string $destination): bool
-    {
-        if (extension_loaded('zip')) {
-            if (file_exists($source)) {
-                $zip = new ZipArchive();
-                if ($zip->open($destination, ZIPARCHIVE::CREATE)) {
-                    $source = realpath($source);
-                    if (is_dir($source)) {
-                        $iterator = new RecursiveDirectoryIterator($source);
-                        // skip dot files while iterating
-                        $iterator->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
-                        $files = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
-                        foreach ($files as $file) {
-                            $file = realpath($file);
-                            if (is_dir($file)) {
-                                $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
-                            } elseif (is_file($file)) {
-                                $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
-                            }
-                        }
-                    } elseif (is_file($source)) {
-                        $zip->addFromString(basename($source), file_get_contents($source));
-                    }
-                }
-                return $zip->close();
-            }
-        }
-        return false;
     }
 
     /**
