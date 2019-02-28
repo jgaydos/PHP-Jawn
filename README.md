@@ -24,8 +24,8 @@ use Jawn\Console;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-Console::info('Success message');
+Console::info('Info message');
 Console::success('Success message');
-Console::warning('Success message');
-Console::danger('Success message');
+Console::warning('Warning message');
+Console::danger('Danger message');
 ```
