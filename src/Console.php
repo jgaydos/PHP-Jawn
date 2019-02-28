@@ -160,6 +160,27 @@ class Console
         return $password;
     }
 
+    public function menu(string $title, array $options): string
+    {
+        foreach ($items as &$item) {
+            $item = [$item, function (\PhpSchool\CliMenu\CliMenu $menu) {
+                $menu->close();
+            }];
+        }
+
+        $menu = (new \PhpSchool\CliMenu\Builder\CliMenuBuilder)
+            ->setTitle($title)
+            ->setTitleSeparator('-')
+            ->addItems($items)
+            ->addLineBreak('-')
+            ->setBackgroundColour('32')
+            ->disableDefaultItems()
+            ->setMarginAuto()
+            ->build();
+        $menu->open();
+        return $menu->getSelectedItem()->getText();
+    }
+
     /**
      * Clears console
      */
