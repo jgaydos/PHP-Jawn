@@ -23,7 +23,7 @@ class Ssh
         }
 
         if (!$this->_conn->login($connection->username, $key)) {
-            exit('Login Failed');
+            throw new SshConnectionException('Login Failed');
         }
     }
 

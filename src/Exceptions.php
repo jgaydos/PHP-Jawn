@@ -26,3 +26,9 @@ class EtlTypeException extends Exception {};
 
 // Io
 class IoNotImplementedException extends Exception {};
+
+// Ssh
+class SshConnectionException extends Exception {};
+
+// Sftp
+class SftpConnectionException extends Exception {};

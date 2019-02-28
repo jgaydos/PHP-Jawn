@@ -24,7 +24,7 @@ class Sftp
         }
 
         if (!$this->_conn->login($connection->username, $key))
-            exit('Login Failed');
+            throw new SftpConnectionException('Login Failed');
     }
 
     /**
