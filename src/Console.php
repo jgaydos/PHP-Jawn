@@ -171,7 +171,7 @@ class Console
         $menu = (new \PhpSchool\CliMenu\Builder\CliMenuBuilder)
             ->setTitle($title)
             ->setTitleSeparator('-')
-            ->addItems($items)
+            ->addItems($options)
             ->addLineBreak('-')
             ->setBackgroundColour('32')
             ->disableDefaultItems()
