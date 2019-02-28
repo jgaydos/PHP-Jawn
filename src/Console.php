@@ -160,7 +160,7 @@ class Console
         return $password;
     }
 
-    public function menu(string $title, array $options): string
+    public function menu(string $title, array $items): string
     {
         foreach ($items as &$item) {
             $item = [$item, function (\PhpSchool\CliMenu\CliMenu $menu) {
@@ -171,7 +171,7 @@ class Console
         $menu = (new \PhpSchool\CliMenu\Builder\CliMenuBuilder)
             ->setTitle($title)
             ->setTitleSeparator('-')
-            ->addItems($options)
+            ->addItems($items)
             ->addLineBreak('-')
             ->setBackgroundColour('32')
             ->disableDefaultItems()
