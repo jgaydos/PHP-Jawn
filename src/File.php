@@ -196,12 +196,8 @@ class File
      * @param   bool    $ignore_errors
      * @return  bool
      */
-    public function cp(
-        string $source,
-        string $target,
-        bool $ignore_errors = false
-    ): bool {
-        if (!file_exists($source) && $ignore_errors) {
+    public function cp(string $source, string $target): bool {
+        if (!file_exists($source)) {
             return false;
         }
         if (!copy($source, $target)) {
