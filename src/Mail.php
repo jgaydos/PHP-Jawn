@@ -24,7 +24,6 @@ class Mail
         $message,
         array $headers = []
     ): bool {
-        Console::info('Sendig mail');
         if (is_array($to)) {
             $to = implode(', ', $to);
         }

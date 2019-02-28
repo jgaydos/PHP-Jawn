@@ -150,7 +150,7 @@ class Console
     {
         $command = "/usr/bin/env bash -c 'echo OK'";
         if (rtrim(shell_exec($command)) !== 'OK') {
-            Console::danger("Can't invoke bash");
+            throw new ConsoleException('Cannot invoke bash.');
         }
         $command = "/usr/bin/env bash -c 'read -s -p \""
             . addslashes($str.$end)
@@ -223,10 +223,10 @@ class Console
                 if (isset($argv[($key + 1)])) {
                     return $argv[($key + 1)];
                 }
-                Console::danger("Argument --$name has no value.");
+                throw new ConsoleException("Argument --{$name} has no value.");
             }
         }
-        Console::danger("Argument --$name does not exist.");
+        throw new ConsoleException("Argument --{$name} does not exist.");
     }
 
     /**

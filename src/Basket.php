@@ -27,7 +27,7 @@ class Basket
             $class = 'Jawn\Database\\'.ucfirst(strtolower(self::$_databases[$name]->driver));
             return new $class(self::$_databases[$name]);
         }
-        Console::danger("Database connection {$name} not found!");
+        throw new BasketConfigException("Database connection {$name} not found.");
     }
 
     /**
@@ -42,7 +42,7 @@ class Basket
             $class = 'Jawn\Remote\\'.ucfirst(strtolower(self::$_remotes[$name]->protocol));
             return new $class(self::$_remotes[$name]);
         }
-        Console::danger("Remote connection {$name} not found!");
+        throw new BasketConfigException("Remote connection {$name} not found.");
     }
 
     /**
@@ -53,7 +53,7 @@ class Basket
     public static function projectDir(string $name = ''): string
     {
         if (self::$_project_dir === '') {
-            Console::danger('Project dir not set for ' . gethostname());
+            throw new BasketConfigException('Project dir not set for ' . gethostname());
         }
         if ($name !== '') {
             return rtrim(self::$_project_dir, '/').'/'.rtrim($name, '/');
@@ -69,7 +69,7 @@ class Basket
     public static function load(string $location): void
     {
         if (!file_exists($location)) {
-            Console::danger('...Config not found!');
+            throw new BasketConfigException('Config not found.');
         }
 
         $config = json_decode(file_get_contents($location));
@@ -81,7 +81,7 @@ class Basket
         foreach ($config->database->connections ?? [] as $key => $item) {
             $class = 'Jawn\Database\\'. ucfirst(strtolower($item->driver));
             if (!class_exists($class)) {
-                Console::danger("Database driver {$item->driver} does not exist!");
+                throw new BasketConfigException("Database driver {$item->driver} does not exist.");
             }
 
             self::$_databases[$key] = $item;
@@ -90,7 +90,7 @@ class Basket
         foreach ($config->remote->connections ?? [] as $key => $item) {
             $class = 'Jawn\Remote\\' . ucfirst(strtolower($item->protocol));
             if (!class_exists($class)) {
-                Console::danger("Remote protocol {$item->protocol} does not exist!");
+                throw new BasketConfigException("Remote protocol {$item->protocol} does not exist.");
             }
 
             self::$_remotes[$key] = $item;

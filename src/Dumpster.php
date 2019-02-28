@@ -14,7 +14,7 @@ class Dumpster
     public static function get(string $handle)
     {
         if (!in_array($handle, self::$_garbage[$handle])) {
-            throw new InvalidArgumentException("{$handle} doesn't exist");
+            throw new InvalidArgumentException("{$handle} doesn't exist.");
         }
         return self::$_garbage[$handle];
     }

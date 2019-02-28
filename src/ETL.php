@@ -53,11 +53,10 @@ class ETL
 
         $class = 'Jawn\Io\\'.ucfirst($type);
         if (!class_exists($class)) {
-            Console::danger("...I am in great pain, Please help me: $type does not exist!");
+            throw new EtlTypeException("$type does not exist.");
         }
         Coffer::set($class::extract($source, $options), $handle);
 
-        //Console::danger('...I am in great pain, please help me: No Data');
         Console::success('...Wubbalubbadubdub!');
         return $this;
     }
@@ -127,7 +126,7 @@ class ETL
         // everything else
         $class = 'Jawn\Io\\'.ucfirst($type);
         if (!class_exists($class)) {
-            Console::danger("...I am in great pain. Please help me, $type does not exist!");
+            throw new EtlTypeException("$type does not exist.");
         }
         $class::load($destination, Coffer::get($handle), $options);
 

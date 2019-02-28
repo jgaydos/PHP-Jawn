@@ -39,13 +39,11 @@ class DB
                 }
 
                 $ofTheKing = [];
-                Console::info("Q -> Querying $name (" . substr(str_replace("  ", '', str_replace("\n", ' ', $query)), 0, 30) . '...)', '');
                 if (preg_match('%^(select)%is', $query) > 0) {
                     $ofTheKing = Basket::database($name)->query($query, $params);
                 } else {
                     $ofTheKing = Basket::database($name)->execute($query, $params);
                 }
-                Console::success('...Wubbalubbadubdub!');
                 return $ofTheKing;
             }
 
