@@ -9,7 +9,7 @@ namespace Jawn\Io;
  */
 class Xlsx
 {
-    private static $history = [];
+    private static $_history = [];
 
     /**
      * Extract or read from source and store as an array
@@ -88,7 +88,7 @@ class Xlsx
             $sheet = 'Sheet1';
         }
 
-        self::$history[$path][] = $sheet;
+        self::$_history[$path][] = $sheet;
 
         // Remove sheet if already exists
         if ($spreadsheet->getSheetByName($sheet) !== null) {
@@ -100,7 +100,7 @@ class Xlsx
 
         // Remove all sheets not in history including the default sheet "Worksheet"
         foreach ($spreadsheet->getSheetNames() as $s) {
-            if (!in_array($s, self::$history[$path])) {
+            if (!in_array($s, self::$_history[$path])) {
                 $sheetIndex = $spreadsheet->getIndex(
                     $spreadsheet->getSheetByName($s)
                 );
