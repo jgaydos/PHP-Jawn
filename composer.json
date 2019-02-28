@@ -3,15 +3,16 @@
     "minimum-stability": "dev",
     "require": {
         "phpoffice/phpspreadsheet": "master",
-		"mpdf/mpdf": "master",
-		"dompdf/dompdf": "master",
-		"tecnickcom/tcpdf": "master",
-		"jpgraph/jpgraph": "master",
+	"mpdf/mpdf": "master",
+	"dompdf/dompdf": "master",
+	"tecnickcom/tcpdf": "master",
+	"jpgraph/jpgraph": "master",
         "phpseclib/phpseclib": "~2.0",
         "peppeocchi/php-cron-scheduler": "2.*",
         "jc21/clitable": "dev-master",
         "monolog/monolog": "^2.0@dev",
-        "jgaydos/php-jdbc-bridge": "dev-master"
+        "jgaydos/php-jdbc-bridge": "dev-master",
+	"php-school/cli-menu": "dev-master"
     },
     "autoload": {
         "classmap": [
