@@ -16,7 +16,7 @@ class Thread
     {
         $this->_callback = function () {};
     }
-    
+
     /**
      * Add a thread to queue
      * @param   object  $function   Anonymous function
