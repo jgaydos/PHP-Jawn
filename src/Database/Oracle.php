@@ -18,13 +18,12 @@ class Oracle implements \Jawn\Interfaces\DatabaseInterface
     {
         $host = $connection->host ?? 'localhost';
         $port = $connection->port ?? 1521;
-        $service = $connection->service ?? 'XE';
-        $database = $connection->database ?? 'master';
+        $database = $connection->database ?? $connection->service ?? 'XE';
         $username = $connection->username ?? '';
         $password = $connection->password ?? '';
 
         //Establish the connection
-        $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SID=$service)))";
+        $dsn = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))(CONNECT_DATA=(SID=$database)))";
         $this->_conn = \oci_connect($username, $password, $dsn);
 
         if (!$this->_conn) {

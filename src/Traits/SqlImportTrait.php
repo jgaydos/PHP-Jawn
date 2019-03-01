@@ -56,7 +56,7 @@ trait SqlImportTrait
                     $where .= " AND [$key] = $item[$key]";
                 }
                 $where = substr($where, 5);
-                if (count($this->query("SELECT 1 AS a FROM [$table] WHERE $where;", [])) > 0) {
+                if (count($this->query("SELECT 1 AS a FROM [{$table}] WHERE {$where};", [])) > 0) {
                     // UPDATE
                     $set = '';
                     foreach ($item as $key => $value) {
@@ -65,14 +65,14 @@ trait SqlImportTrait
                         }
                     }
                     $set = substr($set, 0, -2);
-                    $sql[] = "UPDATE [$table] SET $set WHERE $where;";
+                    $sql[] = "UPDATE [{$table}] SET $set WHERE {$where};";
                     continue; // move to next row and skip insert
                 }
             }
             // INSERT
             $columns = '[' . implode('], [', array_keys($item)) . ']';
             $values = implode(', ', $item);
-            $sql[] = "INSERT INTO [$table] ($columns) VALUES ($values);";
+            $sql[] = "INSERT INTO [{$table}] ({$columns}) VALUES ({$values});";
         }
 
         $buffer = '';

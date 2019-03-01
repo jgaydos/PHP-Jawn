@@ -35,8 +35,6 @@ class Jdbc implements \Jawn\Interfaces\DatabaseInterface
             $connStr = "jdbc:oracle:thin:$username/$password@$host:$port:$database";
         } else {
             throw new \DatabaseQueryException('JDBC driver not configured.');
-
-            Console::danger();
         }
 
         $this->_conn = new \PJBridge($agentHost, $agentPort);

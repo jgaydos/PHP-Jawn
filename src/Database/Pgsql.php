@@ -40,7 +40,7 @@ class Pgsql implements \Jawn\Interfaces\DatabaseInterface
      */
     public function query(string $sql, array $params = []): array
     {
-        $sql = $this->pgsqlParams($sql);
+        $sql = $this->params($sql);
         $result = @pg_query_params($this->_conn, $sql, $params);
 
         if (!$result) {
