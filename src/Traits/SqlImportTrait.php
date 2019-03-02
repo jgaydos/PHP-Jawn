@@ -30,7 +30,7 @@ trait SqlImportTrait
                 : $v)));
         };
 
-        $formatKey = function ($c) {
+        $formatColumn = function ($c) {
             foreach ([0 => 31, 123 => 255] as $start => $end) {
                 for ($i = $start; $i <= $end; ++$i) {
                     $c = str_replace(chr($i), '', $c);
@@ -39,10 +39,10 @@ trait SqlImportTrait
             return $c;
         };
 
-        $format = function ($item) use ($formatKey, $formatValue) {
+        $format = function ($item) use ($formatColumn, $formatValue) {
             $ofTheKing = [];
             foreach ($item as $key => $value) {
-                $ofTheKing[$formatKey($key)] = $formatValue($value);
+                $ofTheKing[$formatColumn($key)] = $formatValue($value);
             }
             return $ofTheKing;
         };

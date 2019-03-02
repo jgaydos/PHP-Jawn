@@ -180,22 +180,30 @@ class Coffer
         if (!is_array($data[key($data)] ?? null)) {
             $data = [$data];
         }
+
+        $formatValue = function ($v) {
+            return (is_string($v) ? "'" . str_replace("'", "''", $v) . "'"
+                : (($v instanceof DateTime) ? "'{$v->format('Y-m-d H:i:s')}'"
+                : ((is_null($v)) ? "NULL"
+                : $v)));
+        };
+
+        $formatColumn = function ($c) {
+            foreach ([0 => 31, 123 => 255] as $start => $end) {
+                for ($i = $start; $i <= $end; ++$i) {
+                    $c = str_replace(chr($i), '', $c);
+                }
+            }
+            return $c;
+        };
+
         $sql = '';
         foreach ($data as $row) {
             $columns = '';
             $values = '';
             foreach ($row as $name => $value) {
-                $name = self::clean($name);
-                $columns .= "[{$name}],";
-                if ($value instanceof \DateTime) {
-                    $values .= "'".$value->format('Y-m-d H:i:s')."',";
-                } elseif (strlen($value) === 0) {
-                    $values .= 'null,';
-                } elseif (is_numeric($value)) {
-                    $values .= $value.',';
-                } else {
-                    $values .= "'".str_replace("'","''",$value)."',";
-                }
+                $columns .= "[{$formatKey($name)}],";
+                $values .= "{$formatValue($value)},";
             }
 
             $columnsStr = substr($columns,0,-1);
@@ -203,24 +211,5 @@ class Coffer
             $sql .= "INSERT INTO [{$handle}] ({$columnsStr}) VALUES ({$valuesStr});";
         }
         self::$_data->exec($sql);
-    }
-
-    /**
-     * Cleans invisible charachters from column/table names
-     * @param   string  $handle    Table/Column name
-     * @return  string  Cleaned
-     */
-    private static function clean(string $handle): string
-    {
-        $dec = [
-            0 => 31,
-            127 => 255,
-        ];
-        foreach ($dec as $start => $end) {
-            for ($i = $start; $i <= $end; ++$i) {
-                $handle = str_replace(chr($i), '', $handle);
-            }
-        }
-        return $handle;
     }
 }
