@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Jawn\Coffer as Coffer;
+use Jawn\Coffer;
 
 class CofferTest extends TestCase
 {
@@ -12,6 +12,7 @@ class CofferTest extends TestCase
         $data2 = [['a' => 1],['a' => 2]];
         Coffer::set($data0);
         Coffer::append($data1);
+
         $this->assertEquals($data2, Coffer::get());
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Jawn\ETL as ETL;
+use Jawn\ETL;
 
 class ETLTest extends TestCase
 {
