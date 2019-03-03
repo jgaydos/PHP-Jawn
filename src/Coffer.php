@@ -147,9 +147,18 @@ class Coffer
      */
     private static function createTable(string $handle, array $columns): void
     {
+        $formatColumn = function ($c) {
+            foreach ([0 => 31, 123 => 255] as $start => $end) {
+                for ($i = $start; $i <= $end; ++$i) {
+                    $c = str_replace(chr($i), '', $c);
+                }
+            }
+            return $c;
+        };
+
         $columnsString = '';
         foreach ($columns as $column) {
-            $column = self::clean($column);
+            $column = $formatColumn($column);
             $columnsString .= ",[$column]";
         }
         $query = "CREATE TABLE IF NOT EXISTS [{$handle}] (".substr($columnsString, 1).')';
@@ -202,7 +211,7 @@ class Coffer
             $columns = '';
             $values = '';
             foreach ($row as $name => $value) {
-                $columns .= "[{$formatKey($name)}],";
+                $columns .= "[{$formatColumn($name)}],";
                 $values .= "{$formatValue($value)},";
             }
 
