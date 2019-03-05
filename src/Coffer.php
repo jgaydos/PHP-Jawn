@@ -13,7 +13,13 @@ class Coffer
 
     /** SQLite3 object */
     private static $_data = null;
+    private static $_path = ':memory:';
 
+    public static function location(string $path)
+    {
+        self::$_path = $path;
+    }
+    
     /**
      * Set handle data
      * @param   array   $data     The data to be imported
@@ -23,7 +29,7 @@ class Coffer
     public static function set(array $data, string $handle = 'morty'): void
     {
         if (self::$_data === null) {
-            self::$_data = new \SQLite3(':memory:');
+            self::$_data = new \SQLite3(self::$_path);
         }
 
         self::dropTable($handle);
