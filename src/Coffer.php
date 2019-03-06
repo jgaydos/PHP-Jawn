@@ -13,13 +13,19 @@ class Coffer
 
     /** SQLite3 object */
     private static $_data = null;
+    /** Location of SQLite DB (memory|file) */
     private static $_path = ':memory:';
 
-    public static function location(string $path)
+    /**
+     * Set the location of the SQLite DB to use.
+     * @param   string  $path   Path to database
+     * @return  void
+     */
+    public static function location(string $path): void
     {
         self::$_path = $path;
     }
-    
+
     /**
      * Set handle data
      * @param   array   $data     The data to be imported
