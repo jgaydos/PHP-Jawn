@@ -51,7 +51,7 @@ class Thread
      * Run all threads in queue
      * @return  void
      */
-    public function run(): void
+    public function run()
     {
         $shared_memory_monitor = shmop_open(
             ftok(__FILE__, chr(0)),
@@ -96,7 +96,7 @@ class Thread
                 }
                 shmop_delete($shared_memory_monitor);
                 $callback = $this->_callback;
-                $callback($result);
+                return $callback($result);
             }
         }
     }
