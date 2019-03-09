@@ -59,9 +59,28 @@ class DB
         return Basket::database($name)->query($query, $params)[0] ?? [];
     }
 
+    public function count()
+    {
+        $args = func_get_args();
+
+        if (is_array($args[1] ?? [])) {
+            $name = '';
+            $query = $args[0];
+            $params = $args[1] ?? [];
+        } else {
+            $name = $args[0];
+            $query = $args[1];
+            $params = $args[2] ?? [];
+        }
+
+        return count(Basket::database($name)->query($query, $params) ?? []);
+    }
+
     public function import(string $table, array $data, array $keys = [])
     {
-        if (is_string($args[1] ?? [])) {
+        $args = func_get_args();
+
+        if (is_string($args[1])) {
             $name = $args[0];
             $table = $args[1];
             $data = $args[2] ?? [];
