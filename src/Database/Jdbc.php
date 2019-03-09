@@ -7,6 +7,7 @@ namespace Jawn\Database;
  */
 class Jdbc implements \Jawn\Interfaces\DatabaseInterface
 {
+    use \Jawn\Traits\SqlImportTrait;
     use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;

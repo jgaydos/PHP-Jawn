@@ -4,6 +4,7 @@ namespace Jawn\Database;
 
 class Oracle implements \Jawn\Interfaces\DatabaseInterface
 {
+    use \Jawn\Traits\SqlImportTrait;
     use \Jawn\Traits\SqlParamsTrait;
 
     private $_conn;
