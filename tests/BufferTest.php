@@ -15,5 +15,11 @@ class BufferTest extends TestCase
 
         $this->assertEquals('a', $get);
         $this->assertEquals('ab', $off);
+
+        Buffer::on();
+        echo 'a';
+        $off = Buffer::off();
+
+        $this->assertEquals('a', $off);
     }
 }
