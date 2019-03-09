@@ -43,11 +43,11 @@ class ETL
             $handle = $args[2] ?? 'morty';
         }
 
-        Console::info("E -> $type as $handle", '');
+        //Console::info("E -> $type as $handle", '');
 
         if ($type === 'array') {
             Coffer::set($source, $handle);
-            Console::success('...Wubbalubbadubdub!');
+            //Console::success('...Wubbalubbadubdub!');
             return $this;
         }
 
@@ -57,7 +57,7 @@ class ETL
         }
         Coffer::set($class::extract($source, $options), $handle);
 
-        Console::success('...Wubbalubbadubdub!');
+        //Console::success('...Wubbalubbadubdub!');
         return $this;
     }
 
@@ -84,9 +84,9 @@ class ETL
             $handle = $args[1] ?? 'morty';
         }
 
-        Console::info("T -> ".($handle !== '' ? "$handle = " : '')."(".substr(str_replace(["\r", "\n", ' '], ' ', $query), 0, 30)."...)", '');
+        //Console::info("T -> ".($handle !== '' ? "$handle = " : '')."(".substr(str_replace(["\r", "\n", ' '], ' ', $query), 0, 30)."...)", '');
         Coffer::query($query, $params, $handle);
-        Console::success('...Wubbalubbadubdub!');
+        //Console::success('...Wubbalubbadubdub!');
         return $this;
     }
 
@@ -104,7 +104,7 @@ class ETL
     {
         $args = func_get_args();
 
-        if (is_array($args[2])) {
+        if (is_array($args[2] ?? '')) {
             $type = $args[0];
             $destination = $args[1];
             $options = $args[2] ?? [];
@@ -116,7 +116,7 @@ class ETL
             $handle = $args[2] ?? 'morty';
         }
 
-        Console::info("L -> $type $destination".($handle !== '' ? " with $handle" : ''), '');
+        //Console::info("L -> $type $destination".($handle !== '' ? " with $handle" : ''), '');
 
         // array
         if ($type === 'array') {
@@ -130,7 +130,7 @@ class ETL
         }
         $class::load($destination, Coffer::get($handle), $options);
 
-        Console::success('...Wubbalubbadubdub!');
+        //Console::success('...Wubbalubbadubdub!');
         return $this;
     }
 }
