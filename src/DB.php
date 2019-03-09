@@ -59,22 +59,20 @@ class DB
         return Basket::database($name)->query($query, $params)[0] ?? [];
     }
 
-    public function import($data = [], $keys = [])
+    public function import(string $table, array $data, array $keys = [])
     {
-        if (empty($data)) {
-            throw new Exception('Import: $data is empty');
-        }
-        if (empty($this->_table)) {
-            throw new Exception('Import: Table must be set before import');
+        if (is_string($args[1] ?? [])) {
+            $name = $args[0];
+            $table = $args[1];
+            $data = $args[2] ?? [];
+            $keys = $args[3] ?? [];
+        } else {
+            $name = '';
+            $table = $args[0];
+            $data = $args[1] ?? [];
+            $keys = $args[2] ?? [];
         }
 
-        foreach ($data as $item) {
-            $columns = '[' . implode('], [', array_keys($item)) . ']';
-            $values = implode(', ', array_map(function ($v) {
-                return (is_string($v) ? "'" . str_replace("'", "''", $v) . "'" : (($v instanceof DateTime)
-                    ? "'{$v->format('Y-m-d H:i:s')}'" : ((is_null($v)) ? "NULL" : $v)));
-            }, $item));
-            "INSERT INTO [$this->_table] ($columns) VALUES ($values);";
-        }
+        Basket::database($name)->import($table, $data, $keys);
     }
 }
