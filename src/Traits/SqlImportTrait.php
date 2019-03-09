@@ -11,12 +11,8 @@ trait SqlImportTrait
      * @param   string  $table    Table name
      * @param   array   $data    A single array or an array of arrays
      */
-    public function import(
-        string $table,
-        array $data,
-        array $keys = [],
-        bool $update = true
-    ): void {
+    public function import(string $table, array $data, array $keys = []): void
+    {
         $sql = [];
 
         if (!is_array($data[key($data)] ?? null)) {
@@ -79,12 +75,12 @@ trait SqlImportTrait
         for($i = 0; $i < $c = count($sql); ++$i) {
             $buffer .= $sql[$i];
             if ($i % 20 === 0) {
-                $this->query($buffer, []);
+                $this->execute($buffer, []);
                 $buffer = '';
             }
         }
         if (strlen($buffer) !== 0) {
-            $this->query($buffer, []);
+            $this->execute($buffer, []);
         }
     }
 }
