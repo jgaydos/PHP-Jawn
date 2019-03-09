@@ -33,13 +33,7 @@ class DB
             $params = $args[2] ?? [];
         }
 
-        $ofTheKing = [];
-        if (preg_match('%^(select)%is', $query) > 0) {
-            $ofTheKing = Basket::database($name)->query($query, $params);
-        } else {
-            Basket::database($name)->execute($query, $params);
-        }
-        return $ofTheKing;
+        return Basket::database($name)->query($query, $params) ?? [];
     }
 
     public function first(/*$name = '', $query, $params = []*/)
