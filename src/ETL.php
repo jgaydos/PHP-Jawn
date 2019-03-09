@@ -95,7 +95,7 @@ class ETL
      *
      * @access  public
      * @param string $type
-     * @param string $destination
+     * @param string $target
      * @param array $options
      * @param string $handle
      * @return ETL
@@ -106,17 +106,17 @@ class ETL
 
         if (is_array($args[2] ?? '')) {
             $type = $args[0];
-            $destination = $args[1];
+            $target = $args[1];
             $options = $args[2] ?? [];
             $handle = $args[3] ?? 'morty';
         } else {
             $type = $args[0];
-            $destination = $args[1];
+            $target = $args[1];
             $options = [];
             $handle = $args[2] ?? 'morty';
         }
 
-        //Console::info("L -> $type $destination".($handle !== '' ? " with $handle" : ''), '');
+        //Console::info("L -> $type $target".($handle !== '' ? " with $handle" : ''), '');
 
         // array
         if ($type === 'array') {
@@ -128,7 +128,7 @@ class ETL
         if (!class_exists($class)) {
             throw new EtlTypeException("$type does not exist.");
         }
-        $class::load($destination, Coffer::get($handle), $options);
+        $class::load($target, Coffer::get($handle), $options);
 
         //Console::success('...Wubbalubbadubdub!');
         return $this;
