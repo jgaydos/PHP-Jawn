@@ -96,7 +96,7 @@ class Thread
                 }
                 shmop_delete($shared_memory_monitor);
                 $callback = $this->_callback;
-                return $callback($result);
+                return array_map('trim', $callback($result));
             }
         }
     }
