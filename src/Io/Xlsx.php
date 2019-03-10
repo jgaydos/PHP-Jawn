@@ -77,7 +77,7 @@ class Xlsx
         }
 
         // Load file if exist else create new
-        if (\File::exists($path)) {
+        if (\Jawn\File::exists($path)) {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path);
         } else {
             $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
