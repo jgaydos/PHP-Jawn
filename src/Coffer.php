@@ -202,13 +202,6 @@ class Coffer
             $data = [$data];
         }
 
-        $formatValue = function ($v) {
-            return (is_string($v) ? "'" . str_replace("'", "''", $v) . "'"
-                : (($v instanceof DateTime) ? "'{$v->format('Y-m-d H:i:s')}'"
-                : ((is_null($v)) ? "NULL"
-                : $v)));
-        };
-
         $formatColumn = function ($c) {
             foreach ([0 => 31, 123 => 255] as $start => $end) {
                 for ($i = $start; $i <= $end; ++$i) {
@@ -224,7 +217,17 @@ class Coffer
             $values = '';
             foreach ($row as $name => $value) {
                 $columns .= "[{$formatColumn($name)}],";
-                $values .= "{$formatValue($value)},";
+                if ($value instanceof \DateTime) {
+                    $values .= "'".$value->format('Y-m-d H:i:s')."',";
+                } elseif (is_null($value)) {
+                    $values .= 'null,';
+                } elseif (strlen($value) === 0) {
+                    $values .= "'',";
+                } elseif (is_numeric($value)) {
+                    $values .= $value.',';
+                } else {
+                    $values .= "'".str_replace("'","''",$value)."',";
+                }
             }
 
             $columnsStr = substr($columns,0,-1);
