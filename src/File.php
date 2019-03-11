@@ -142,7 +142,7 @@ class File
         string $target,
         int $mode = 0777,
         bool $recursive = false
-    ) {
+    ): bool {
         if (!mkdir($target, $mode, $recursive)) {
             return false;
         }
@@ -193,10 +193,10 @@ class File
      * Copy file
      * @param   string  $source
      * @param   string  $target
-     * @param   bool    $ignore_errors
      * @return  bool
      */
-    public function cp(string $source, string $target): bool {
+    public function cp(string $source, string $target): bool
+    {
         if (!file_exists($source)) {
             return false;
         }
@@ -222,8 +222,9 @@ class File
 
     /**
      * Reads an entire file into a string
+     * @return  bool
      */
-    public function contents(string $target)
+    public function contents(string $target): bool
     {
         if (!file_exists($target)) {
             return false;
@@ -233,8 +234,9 @@ class File
 
     /**
      * Reads an entire file into an array
+     * @return  bool
      */
-    public function read(string $target)
+    public function read(string $target): bool
     {
         if (!file_exists($target)) {
             return false;
@@ -244,6 +246,10 @@ class File
 
     /**
      * Replace all occurances of a string with another within a file
+     * @param   string  $target
+     * @param   string  $old
+     * @param   string  $new
+     * @return  void
      */
     public function replace(string $target, string $old, string $new): void
     {
@@ -258,8 +264,8 @@ class File
     /**
      * Adds a file to a ZIP archive from the given path.
      * Overrides/Creates archives
-     * @param   string  $source
-     * @param   string|array  $destination
+     * @param   string|array  $source
+     * @param   string  $destination
      * @return  bool
      */
     public function zip($source, string $destination): bool
