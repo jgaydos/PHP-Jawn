@@ -14,7 +14,7 @@ class Curl
      */
     public function get(
         string $uri,
-        mixed $data = null,
+        $data = null,
         array $curl_headers = [],
         array $curl_options = []
     ): array {
@@ -31,7 +31,7 @@ class Curl
      */
     public function post(
         string $uri,
-        mixed $data = null,
+        $data = null,
         array $curl_headers = [],
         array $curl_options = []
     ): array {
@@ -48,7 +48,7 @@ class Curl
      */
     public function put(
         string $uri,
-        mixed $data = null,
+        $data = null,
         array $curl_headers = [],
         array $curl_options = []
     ): array {
@@ -65,7 +65,7 @@ class Curl
      */
     public function delete(
         string $uri,
-        mixed $data = null,
+        $data = null,
         array $curl_headers = [],
         array $curl_options = []
     ): array {
@@ -84,7 +84,7 @@ class Curl
     private function send(
         string $uri,
         string $method = 'GET',
-        mixed $data = null,
+        $data = null,
         array $curl_headers = [],
         array $curl_options = []
     ): array {
