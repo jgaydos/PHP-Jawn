@@ -90,7 +90,6 @@ class Curl
     ): array {
         // defaults
         $default_curl_options = [
-            CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 3,
