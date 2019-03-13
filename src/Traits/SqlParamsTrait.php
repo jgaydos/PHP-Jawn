@@ -22,7 +22,7 @@ trait SqlParamsTrait
         } else {
             // sequencial array for ? replacement
             foreach ($params as $param) {
-                if ($pos = strpos($query, '?') !== false) {
+                if (($pos = strpos($query, '?')) !== false) {
                     $query = substr_replace($query, $param, $pos, strlen('?'));
                 }
             }
