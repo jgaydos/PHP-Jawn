@@ -41,8 +41,8 @@ class Pgsql implements \Jawn\Interfaces\DatabaseInterface
      */
     public function query(string $sql, array $params = []): array
     {
-        $sql = $this->params($sql);
-        $result = @pg_query_params($this->_conn, $sql, $params);
+        $sql = $this->params($sql, $params);
+        $result = pg_query($this->_conn, $sql);
 
         if (!$result) {
             throw new \DatabaseQueryException(pg_last_error($this->_conn));
@@ -65,9 +65,9 @@ class Pgsql implements \Jawn\Interfaces\DatabaseInterface
      */
     public function execute(string $sql, array $params = []): void
     {
-        $sql = $this->pgsqlParams($sql);
+        $sql = $this->params($sql, $params);
 
-        if (!pg_query_params($this->_conn, $sql, $params)) {
+        if (!pg_query($this->_conn, $sql)) {
             throw new \DatabaseQueryException(pg_last_error($this->_conn));
         }
     }
