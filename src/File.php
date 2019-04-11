@@ -340,6 +340,7 @@ class File
      * Write data to a file, if exists override
      * @param   string          $target     Path to the file where to write the data
      * @param   string|array    $contents   The data to write (string, an array or a stream resource)
+     * @return  bool
      */
     public function write(string $target, $contents)
     {
@@ -353,6 +354,7 @@ class File
      * Write data to a file, if exists append
      * @param   string          $target     Path to the file where to write the data
      * @param   string|array    $contents   The data to write (string, an array or a stream resource)
+     * @return  bool
      */
     public function append(string $target, $contents)
     {
