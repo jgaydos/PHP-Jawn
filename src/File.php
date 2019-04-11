@@ -332,8 +332,33 @@ class File
             $zip->extractTo($target);
             $zip->close();
             return true;
-        } else {
+        }
+        return false;
+    }
+
+    /**
+     * Write data to a file, if exists override
+     * @param   string          $target     Path to the file where to write the data
+     * @param   string|array    $contents   The data to write (string, an array or a stream resource)
+     */
+    public function write(string $target, $contents)
+    {
+        if (file_put_contents($target, $contents) === false) {
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Write data to a file, if exists append
+     * @param   string          $target     Path to the file where to write the data
+     * @param   string|array    $contents   The data to write (string, an array or a stream resource)
+     */
+    public function append(string $target, $contents)
+    {
+        if (file_put_contents($target, $contents, FILE_APPEND) === false) {
+            return false;
+        }
+        return true;
     }
 }
