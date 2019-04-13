@@ -222,6 +222,7 @@ class File
 
     /**
      * Reads an entire file into a string
+     * @param   string  $target
      * @return  bool
      */
     public function contents(string $target): bool
@@ -234,6 +235,7 @@ class File
 
     /**
      * Reads an entire file into an array
+     * @param   string  $target
      * @return  bool
      */
     public function read(string $target): bool
