@@ -62,6 +62,12 @@ class Random
         return $ofTheKing;
     }
 
+    /**
+     * Generate random table data (array of arrays)
+     * @param   array   $columns
+     * @param   int     $rows
+     * @return  array
+     */
     public static function table(
         array $columns = [
             'col1' => 'string:1,10',
