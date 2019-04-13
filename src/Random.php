@@ -42,7 +42,8 @@ class Random
 
     /**
      * Generate random string
-     * @param   int    $length
+     * @param   int    $min
+     * @param   int    $max
      * @param   string  $keyspace
      * @return  string
      */
