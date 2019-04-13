@@ -9,8 +9,8 @@ class Random
 {
     /**
      * Generate random float
-     * @param   int     $min
-     * @param   int     $max
+     * @param   int     $length
+     * @param   int     $decimal
      * @return  float
      */
     public static function float(int $length = 10, int $decimal = 2): float
