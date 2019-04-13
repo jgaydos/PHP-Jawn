@@ -4,6 +4,12 @@ namespace Jawn;
 
 class Io
 {
+    /**
+     * @param   string  $type
+     * @param   string  $source
+     * @param   array   $options
+     * @return  array
+     */
     public static function extract(
         string $type,
         string $source,
@@ -16,6 +22,13 @@ class Io
         return $class::extract($source, $options);
     }
 
+    /**
+     * @param   string  $type
+     * @param   string  $target
+     * @param   array   $data
+     * @param   array   $options
+     * @return  void
+     */
     public static function load(
         string $type,
         string $target,
