@@ -32,7 +32,7 @@ class Date
     }
 
     /**
-     * Returns current date formatted YYYY_MM_DD
+     * Returns current date formatted YYYY-MM-DD
      */
     public static function now(string $dash = '-'): string
     {
