@@ -10,7 +10,7 @@
         "phpseclib/phpseclib": "~2.0",
         "peppeocchi/php-cron-scheduler": "2.*",
         "jc21/clitable": "dev-master",
-        "monolog/monolog": "^2.0@dev",
+        "monolog/monolog": "^1.12",
         "jgaydos/php-jdbc-bridge": "dev-master",
 	"php-school/cli-menu": "dev-master"
     },
