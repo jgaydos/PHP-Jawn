@@ -4,6 +4,7 @@ namespace Jawn\Io;
 
 /**
  * You put it in and take it out
+ * Recomended as JSON is able to distinguish between null and 'null'
  */
 class Json
 {
