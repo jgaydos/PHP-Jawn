@@ -17,9 +17,7 @@ class Json
      */
     public static function extract(string $path, array $options = []): array
     {
-        $ofTheKing = [];
-        
-        return $ofTheKing;
+        return json_decode(file_get_contents($path)) ?: [];
     }
 
     /**
@@ -33,6 +31,6 @@ class Json
      */
     public static function load(string $path, array $data, array $options = []): void
     {
-        
+        file_put_contents($path, json_encode($data));
     }
 }
