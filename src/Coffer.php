@@ -70,11 +70,20 @@ class Coffer
      * @param   string   $handle   Table name
      * @return  void
      */
-    public static function query(
-        string $query,
-        array $params = [],
-        string $handle = 'morty'
-    ): array {
+    public static function query(): array
+    {
+        $args = func_get_args();
+
+        if (is_array($args[1] ?? '')) {
+            $query = $args[0];
+            $params = $args[1] ?? [];
+            $handle = $args[2] ?? 'morty';
+        } else {
+            $query = $args[0];
+            $params = [];
+            $handle = $args[1] ?? 'morty';
+        }
+
         $query = self::params($query, $params);
         $results = self::$_data->query($query);
         if (!$results) {
