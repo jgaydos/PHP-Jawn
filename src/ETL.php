@@ -74,7 +74,7 @@ class ETL
     {
         $args = func_get_args();
 
-        if (is_array($args[0] ?? '')) {
+        if (is_array($args[1] ?? '')) {
             $query = $args[0];
             $params = $args[1] ?? [];
             $handle = $args[2] ?? 'morty';

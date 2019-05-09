@@ -9,8 +9,8 @@ class ETLTest extends TestCase
     {
         $data = [['a' => 1]];
         $ETL = new ETL;
-        $ETL->extract('array', $data)
-            ->transform('SELECT * FROM morty', 'morty');
+        $ETL->extract('array', $data, 'a')
+            ->transform('SELECT * FROM a', 'morty');
         $this->assertEquals($data, $ETL->load('array', 'morty'));
     }
 }
