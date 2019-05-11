@@ -7,19 +7,18 @@ class IoTest extends TestCase
 {
     public function testExtract()
     {
-        $tests = ['csv', 'xls', 'xlsx'];
+        $tests = ['csv', 'xls', 'xlsx', 'json'];
 
         foreach ($tests as $type) {
             $data = Io::extract($type, __DIR__.'/data/sample.'.$type);
 
             $this->assertEquals(count($data), 5000);
-            $this->assertEquals($data[4999]['Id'], 6125);
         }
     }
 
     public function testExtractLoad()
     {
-        $tests = ['csv', 'xls', 'xlsx'];
+        $tests = ['csv', 'xls', 'xlsx', 'json'];
 
         foreach ($tests as $type) {
             $data = Io::extract($type, __DIR__.'/data/sample.'.$type);

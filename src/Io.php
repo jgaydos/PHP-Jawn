@@ -17,7 +17,7 @@ class Io
     ): array {
         $class = 'Jawn\Io\\'.ucfirst($type);
         if (!class_exists($class)) {
-            throw new EtlTypeException("$type does not exist.");
+            throw new \IoNotImplementedException("$type does not exist.");
         }
         return $class::extract($source, $options);
     }
@@ -37,7 +37,7 @@ class Io
     ): void {
         $class = 'Jawn\Io\\'.ucfirst($type);
         if (!class_exists($class)) {
-            throw new EtlTypeException("$type does not exist.");
+            throw new \IoNotImplementedException("$type does not exist.");
         }
         $class::load($target, $data, $options);
     }
