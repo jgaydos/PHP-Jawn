@@ -8,11 +8,8 @@
 	"tecnickcom/tcpdf": "master",
 	"jpgraph/jpgraph": "master",
         "phpseclib/phpseclib": "~2.0",
-        "peppeocchi/php-cron-scheduler": "2.*",
         "jc21/clitable": "dev-master",
-        "monolog/monolog": "^1.12",
         "jgaydos/php-jdbc-bridge": "dev-master",
-	"php-school/cli-menu": "dev-master"
     },
     "autoload": {
         "classmap": [
