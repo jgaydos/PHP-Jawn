@@ -9,7 +9,7 @@
 	"jpgraph/jpgraph": "master",
         "phpseclib/phpseclib": "~2.0",
         "jc21/clitable": "dev-master",
-        "jgaydos/php-jdbc-bridge": "dev-master",
+        "jgaydos/php-jdbc-bridge": "dev-master"
     },
     "autoload": {
         "classmap": [
