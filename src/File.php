@@ -223,9 +223,9 @@ class File
     /**
      * Reads an entire file into a string
      * @param   string  $target
-     * @return  bool
+     * @return  string
      */
-    public function contents(string $target): bool
+    public function contents(string $target): string
     {
         if (!file_exists($target)) {
             return false;
@@ -236,9 +236,9 @@ class File
     /**
      * Reads an entire file into an array
      * @param   string  $target
-     * @return  bool
+     * @return  array
      */
-    public function read(string $target): bool
+    public function read(string $target): array
     {
         if (!file_exists($target)) {
             return false;
