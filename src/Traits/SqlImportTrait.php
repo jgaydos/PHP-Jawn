@@ -20,10 +20,27 @@ trait SqlImportTrait
         }
 
         $formatValue = function ($v) {
-            return (is_string($v) ? "'" . str_replace("'", "''", $v) . "'"
+            /*return (is_string($v) ? "'" . str_replace("'", "''", $v) . "'"
                 : (($v instanceof DateTime) ? "'{$v->format('Y-m-d H:i:s')}'"
                 : ((is_null($v)) ? "NULL"
-                : $v)));
+                : $v)));*/
+            
+            if (substr($v, 0, 1) == '0' && substr($v, 1, 1) != '.') {
+                $v = "'".str_replace("'","''",$v)."'";
+            } elseif ($v instanceof \DateTime) {
+                $v = "'".$v->format('Y-m-d H:i:s')."'";
+            } elseif (is_null($v)) {
+                $v = 'null';
+            } elseif (strlen($v) === 0) {
+                $v = "''";
+            } elseif (is_numeric($v)) {
+                $v = $v;
+            } elseif (is_string($v)) {
+                $v = "'".str_replace("'","''",$v)."'";
+            } else {
+                $v = "'".str_replace("'","''",$v)."'";
+            }
+            return $v;
         };
 
         $formatColumn = function ($c) {
