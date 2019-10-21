@@ -226,7 +226,7 @@ class Coffer
             $values = '';
             foreach ($row as $name => $value) {
                 $columns .= "[{$formatColumn($name)}],";
-                if ($value instanceof \DateTime) {
+                /*if ($value instanceof \DateTime) {
                     $values .= "'".$value->format('Y-m-d H:i:s')."',";
                 } elseif (is_null($value)) {
                     $values .= 'null,';
@@ -234,6 +234,21 @@ class Coffer
                     $values .= "'',";
                 } elseif (is_numeric($value)) {
                     $values .= $value.',';
+                } else {
+                    $values .= "'".str_replace("'","''",$value)."',";
+                }*/
+                if (substr($value, 0, 1) == '0' && substr($value, 1, 1) != '.') {
+                    $values .= "'".str_replace("'","''",$value)."',";
+                } elseif ($value instanceof \DateTime) {
+                    $values .= "'".$value->format('Y-m-d H:i:s')."',";
+                } elseif (is_null($value)) {
+                    $values .= 'null,';
+                } elseif (strlen($value) === 0) {
+                    $values .= "'',";
+                } elseif (is_numeric($value)) {
+                    $values .= $value.',';
+                } elseif (is_string($value)) {
+                    $values .= "'".str_replace("'","''",$value)."',";
                 } else {
                     $values .= "'".str_replace("'","''",$value)."',";
                 }
