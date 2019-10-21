@@ -237,10 +237,10 @@ class Coffer
                 } else {
                     $values .= "'".str_replace("'","''",$value)."',";
                 }*/
-                if (substr($value, 0, 1) == '0' && substr($value, 1, 1) != '.') {
-                    $values .= "'".str_replace("'","''",$value)."',";
-                } elseif ($value instanceof \DateTime) {
+                if ($value instanceof \DateTime) {
                     $values .= "'".$value->format('Y-m-d H:i:s')."',";
+                } elseif (substr($value, 0, 1) == '0' && substr($value, 1, 1) != '.') {
+                    $values .= "'".str_replace("'","''",$value)."',";
                 } elseif (is_null($value)) {
                     $values .= 'null,';
                 } elseif (strlen($value) === 0) {
