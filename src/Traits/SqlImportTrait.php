@@ -25,10 +25,10 @@ trait SqlImportTrait
                 : ((is_null($v)) ? "NULL"
                 : $v)));*/
             
-            if (substr($v, 0, 1) == '0' && substr($v, 1, 1) != '.') {
-                $v = "'".str_replace("'","''",$v)."'";
-            } elseif ($v instanceof \DateTime) {
+            if ($v instanceof \DateTime) {
                 $v = "'".$v->format('Y-m-d H:i:s')."'";
+            } elseif (substr($v, 0, 1) == '0' && substr($v, 1, 1) != '.') {
+                $v = "'".str_replace("'","''",$v)."'";
             } elseif (is_null($v)) {
                 $v = 'null';
             } elseif (strlen($v) === 0) {
