@@ -9,17 +9,17 @@ class DB
 {
     private $_connection = '';
 
-    public function connection($connection = ''): object
+    public function static connection($connection = ''): object
     {
         return Basket::database($connection);
     }
 
-    public function conn($connection = ''): object
+    public function static conn($connection = ''): object
     {
         return Basket::database($connection);
     }
 
-    public function query(/*$name = '', $query, $params = []*/)
+    public function static query(/*$name = '', $query, $params = []*/)
     {
         $args = func_get_args();
 
@@ -36,7 +36,7 @@ class DB
         return Basket::database($name)->query($query, $params) ?? [];
     }
 
-    public function first(/*$name = '', $query, $params = []*/)
+    public function static first(/*$name = '', $query, $params = []*/)
     {
         $args = func_get_args();
 
@@ -53,7 +53,7 @@ class DB
         return Basket::database($name)->query($query, $params)[0] ?? [];
     }
 
-    public function count()
+    public function static count()
     {
         $args = func_get_args();
 
@@ -70,7 +70,7 @@ class DB
         return count(Basket::database($name)->query($query, $params) ?? []);
     }
 
-    public function import(string $table, array $data, array $keys = [])
+    public function static import(string $table, array $data, array $keys = [])
     {
         $args = func_get_args();
 
